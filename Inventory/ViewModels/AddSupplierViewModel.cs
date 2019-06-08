@@ -1,23 +1,16 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Input;
-using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Command;
 using Inventory.Models;
-using Microsoft.EntityFrameworkCore;
 
 namespace Inventory.ViewModels
 {
-    public class AddSupplierViewModel : ViewModelBase
+    public class AddSupplierViewModel : DbInsertViewModelBase
     {
-        private readonly InventoryContext _context;
+        public static readonly Guid MessageToken = Guid.NewGuid();
+
         private string _name;
         private string _comments;
-
-        public AddSupplierViewModel(InventoryContext context)
-        {
-            _context = context;
-        }
 
         public string Name
         {
@@ -40,48 +33,31 @@ namespace Inventory.ViewModels
             }
         }
 
-        private bool InsertSupplier()
+        protected override object ConvertToEntity()
         {
-            var supplier = new Supplier
+            return new Supplier
             {
-                Comments = Comments,
-                Name = Name
+                Name = Name,
+                Comments = Comments
             };
-            _context.Add(supplier);
-
-            try
-            {
-                _context.SaveChanges();
-            }
-            catch (DbUpdateException e)
-            {
-                MessageBox.Show($"Unable to insert: {e.Message}", "Insertion failed", MessageBoxButton.OK,
-                    MessageBoxImage.Error);
-                return false;
-            }
-
-            return false;
         }
 
-        private void CreateCommands()
+        protected override void ClearFields()
         {
-            CommandInsertNext = new RelayCommand(() =>
-            {
-                var inserted = InsertSupplier();
-                if (inserted)
-                {
-                    Name = string.Empty;
-                    Comments = string.Empty;
-                }
-            }, () => !string.IsNullOrWhiteSpace(Name));
-
-            CommandInsertClose = 
+            Name = null;
+            Comments = null;
         }
 
-        public RelayCommand CommandInsertNext { get; private set; }
+        protected override bool ShouldPromptClose()
+        {
+            return !string.IsNullOrWhiteSpace(Name) || !string.IsNullOrWhiteSpace(Comments);
+        }
 
-        public RelayCommand CommandInsertClose { get; private set; }
-        public ICommand CommandClose { get; }
+        protected override bool CanInsert()
+        {
+            return !string.IsNullOrWhiteSpace(Name);
+        }
 
+        public override Guid MsgToken => MessageToken;
     }
 }

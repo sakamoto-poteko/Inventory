@@ -1,0 +1,36 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Inventory.Views">
+    <ControlTemplate x:Key="InsertWindowTemplate" TargetType="Window">
+        <Border Background="{TemplateBinding Background}" 
+                BorderBrush="{TemplateBinding BorderBrush}" 
+                BorderThickness="{TemplateBinding BorderThickness}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <ContentPresenter Grid.Row="1" 
+                                  Content="{TemplateBinding Content}" 
+                                  ContentTemplate="{TemplateBinding ContentTemplate}"
+                                  Margin="5,5,5,5" />
+                <Grid Grid.Row="2">
+                    <Grid.Resources>
+                        <Style TargetType="{x:Type Button}">
+                            <Setter Property="Margin" Value="5,5,5,5" />
+                        </Style>
+                    </Grid.Resources>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Content="Insert &amp; _New" Grid.Column="0" IsDefault="True" Command="{Binding CommandInsertNext}" />
+                    <Button Content="Insert &amp; _Close" Grid.Column="1" Command="{Binding CommandInsertClose}"/>
+                    <Button Content="Close (_x)" Grid.Column="2" IsCancel="True" Command="{Binding CommandClose}" />
+                </Grid>
+            </Grid>
+        </Border>
+    </ControlTemplate>
+</ResourceDictionary>

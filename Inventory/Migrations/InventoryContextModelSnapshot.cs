@@ -52,6 +52,9 @@ namespace Inventory.Migrations
 
                     b.Property<int>("Quantity");
 
+                    b.Property<string>("UniqueId")
+                        .IsRequired();
+
                     b.HasKey("Id");
 
                     b.HasIndex("LocationId");
@@ -145,11 +148,13 @@ namespace Inventory.Migrations
 
                     b.Property<int>("InventoryId");
 
-                    b.Property<int>("Price");
+                    b.Property<int?>("Price");
 
                     b.Property<int>("Quantity");
 
                     b.Property<int>("SupplierId");
+
+                    b.Property<DateTime>("Time");
 
                     b.HasKey("Id");
 

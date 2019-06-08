@@ -1,0 +1,80 @@
+﻿<Window x:Class="Inventory.Views.AddLocation"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Inventory.Views"
+        xmlns:validators="clr-namespace:Inventory.Validators"
+        mc:Ignorable="d"
+        Title="Add Location" Height="350" Width="566"
+        DataContext="{Binding AddLocationViewModel, Source={StaticResource ViewModelLocator}}"
+        WindowStartupLocation="CenterScreen"
+        Template="{StaticResource InsertWindowTemplate}"
+        FocusManager.FocusedElement="{Binding ElementName=TbLocationName}">
+    <Grid>
+        <Grid.Resources>
+            <Style TargetType="{x:Type TextBlock}">
+                <Setter Property="Margin" Value="5,5,0,0" />
+            </Style>
+            <Style TargetType="{x:Type TextBox}">
+                <Setter Property="Margin" Value="5,5,5,0" />
+            </Style>
+            <Style TargetType="{x:Type CheckBox}">
+                <Setter Property="Margin" Value="5,5,5,0" />
+            </Style>
+        </Grid.Resources>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="2*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Label Content="Location N_ame" Target="{Binding ElementName=TbLocationName}"/>
+        <TextBox x:Name="TbLocationName" Grid.Row="0" Grid.Column="1" Text="{Binding LocationName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+        <Label Grid.Row="1" Grid.Column="0" Content="C_omments" Target="{Binding ElementName=TbComments}"/>
+        <TextBox x:Name="TbComments" Grid.Row="1" Grid.Column="1" Text="{Binding Comments, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+
+        <TabControl Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
+            <TabItem Header="S_ingle">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0" Content="Location _Unit" Visibility="{Binding LocationUnitVisible}" />
+                    <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding LocationUnit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding LocationUnitVisible}" />
+                </Grid>
+            </TabItem>
+            <TabItem Header="S_eries" IsSelected="{Binding IsSeries}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Label Grid.Row="0" Grid.Column="0" Content="Location Unit _begin (Inclusive)"/>
+                    <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Path=SeriesBegin, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         PreviewTextInput="TextBoxSeriesBeginEnd_PreviewTextInput" DataObject.Pasting="TextBoxSeriesBeginEnd_Pasting" />
+                    <Label Grid.Row="1" Grid.Column="0" Content="Location Unit _end (Inclusive)" />
+                    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Path=SeriesEnd, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         PreviewTextInput="TextBoxSeriesBeginEnd_PreviewTextInput" DataObject.Pasting="TextBoxSeriesBeginEnd_Pasting" />
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>

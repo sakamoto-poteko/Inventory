@@ -4,7 +4,11 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="Add Supplier" Height="450" Width="800">
+        Title="Add Supplier" Height="200" Width="324" 
+        DataContext="{Binding AddSupplierViewModel, Source={StaticResource ViewModelLocator}}"
+        Template="{StaticResource InsertWindowTemplate}"
+        WindowStartupLocation="CenterScreen"
+        FocusManager.FocusedElement="{Binding ElementName=TbSupplierName}">
     <Grid>
         <Grid.Resources>
             <Style TargetType="{x:Type TextBlock}">
@@ -13,35 +17,22 @@
             <Style TargetType="{x:Type TextBox}">
                 <Setter Property="Margin" Value="5,5,5,0" />
             </Style>
-            <Style TargetType="{x:Type Button}">
-                <Setter Property="Margin" Value="5,5,5,5" />
-            </Style>
         </Grid.Resources>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="2*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <TextBlock Text="Supplier Name"/>
-        <TextBox Grid.Row="0" Grid.Column="1" Text="TextBox" />
 
-        <TextBlock Grid.Row="1" Grid.Column="0" Text="Comments" />
-        <TextBox Grid.Row="1" Grid.Column="1" Text="comments" />
-        <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Button Content="Insert &amps; New" Grid.Column="0"/>
-            <Button Content="Insert &amps; Close" Grid.Column="1" />
-            <Button Content="Close" Grid.Column="2"  />
+        <Label Content="Supplier N_ame" Target="{Binding ElementName=TbSupplierName}"/>
+        <TextBox x:Name="TbSupplierName" Grid.Row="0" Grid.Column="1" Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
-        </Grid>
+        <Label Grid.Row="1" Grid.Column="0" Content="C_omments" />
+        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Comments, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
     </Grid>
 </Window>

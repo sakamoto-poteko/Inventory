@@ -14,6 +14,9 @@ namespace Inventory.Models
         public int ProductId { get; set; }
 
         [Required]
+        public string UniqueId { get; set; }
+
+        [Required]
         public Product Product { get; set; }
 
         public int LocationId { get; set; }

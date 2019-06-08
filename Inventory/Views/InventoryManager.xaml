@@ -1,0 +1,52 @@
+﻿<Window x:Class="Inventory.Views.InventoryManager"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Inventory Manager" Width="800" Height="600"
+        WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.Resources>
+            <Style TargetType="{x:Type Button}">
+                <Setter Property="Margin" Value="5,5,0,0" />
+            </Style>
+        </Grid.Resources>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Button x:Name="BtnAddSupplier" Content="Add Supplier" Click="BtnAddSupplier_Click" />
+        <Button Content="Query Supplier" Grid.Row="0" Grid.Column="1" />
+
+        <Button x:Name="BtnAddLocation" Content="Add Location" Grid.Row="1" Grid.Column="0" Click="BtnAddLocation_Click"/>
+        <Button Content="Query Location" Grid.Row="1" Grid.Column="1"/>
+
+        <Button x:Name="BtnAddFootprint" Content="Add Footprint" Grid.Row="2" Grid.Column="0" Click="BtnAddFootprint_Click"/>
+        <Button Content="Query Footprint" Grid.Row="2" Grid.Column="1"/>
+
+        <Button x:Name="BtnAddProduct" Content="Add Product" Grid.Row="3" Grid.Column="0" Click="BtnAddProduct_Click"/>
+        <Button Content="Query Product" Grid.Row="3" Grid.Column="1"/>
+
+        <Button Content="Purchase (Inbound)" Grid.Row="4" Grid.Column="0"/>
+        <Button Content="Return (Inbound)" Grid.Row="4" Grid.Column="1"/>
+        <Button Content="Retrieve (Outbound)" Grid.Row="4" Grid.Column="2"/>
+        <Button Content="Shrinkage (Outbound)" Grid.Row="4" Grid.Column="3"/>
+
+        <Button Content="Query Inventory" Grid.Row="5" Grid.Column="1"/>
+        <Button Content="Locate Inventory" Grid.Row="5" Grid.Column="2"/>
+
+    </Grid>
+</Window>

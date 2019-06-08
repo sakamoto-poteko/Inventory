@@ -5,6 +5,7 @@
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <UseWPF>true</UseWPF>
     <StartupObject>Inventory.App</StartupObject>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
 
   <ItemGroup>
@@ -21,8 +22,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Splash.png" />
+    <None Remove="Views\AddFootprint.xaml" />
+    <None Remove="Views\AddLocation.xaml" />
+    <None Remove="Views\AddProduct.xaml" />
     <None Remove="Views\AddSupplier.xaml" />
     <None Remove="InventoryManager.xaml" />
+    <None Remove="Views\ControlTemplates.xaml" />
+    <None Remove="Views\DPIFix.xaml" />
+    <None Remove="Views\InventoryManager.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -37,6 +45,10 @@
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="3.0.0-preview5.19227.9" />
     <PackageReference Include="MvvmLight" Version="5.4.1.1" />
     <PackageReference Include="MvvmLightLibsStd10" Version="5.4.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Splash.png" />
   </ItemGroup>
 
   <ItemGroup>
