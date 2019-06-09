@@ -29,10 +29,10 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Button x:Name="BtnAddSupplier" Content="Add Supplier" Click="BtnAddSupplier_Click" />
-        <Button Content="Query Supplier" Grid.Row="0" Grid.Column="1" />
+        <Button x:Name="BtnViewSuppliers" Content="View Suppliers" Grid.Row="0" Grid.Column="1" Click="BtnViewSuppliers_Click" />
 
         <Button x:Name="BtnAddLocation" Content="Add Location" Grid.Row="1" Grid.Column="0" Click="BtnAddLocation_Click"/>
-        <Button Content="Query Location" Grid.Row="1" Grid.Column="1"/>
+        <Button x:Name="BtnViewLocation" Content="View Location" Grid.Row="1" Grid.Column="1" Click="BtnViewLocation_Click"/>
 
         <Button x:Name="BtnAddFootprint" Content="Add Footprint" Grid.Row="2" Grid.Column="0" Click="BtnAddFootprint_Click"/>
         <Button Content="Query Footprint" Grid.Row="2" Grid.Column="1"/>

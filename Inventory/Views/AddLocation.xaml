@@ -13,15 +13,11 @@
         FocusManager.FocusedElement="{Binding ElementName=TbLocationName}">
     <Grid>
         <Grid.Resources>
-            <Style TargetType="{x:Type TextBlock}">
-                <Setter Property="Margin" Value="5,5,0,0" />
-            </Style>
-            <Style TargetType="{x:Type TextBox}">
-                <Setter Property="Margin" Value="5,5,5,0" />
-            </Style>
-            <Style TargetType="{x:Type CheckBox}">
-                <Setter Property="Margin" Value="5,5,5,0" />
-            </Style>
+            <ResourceDictionary>
+                <ResourceDictionary.MergedDictionaries>
+                    <ResourceDictionary Source="MarginResources.xaml" />
+                </ResourceDictionary.MergedDictionaries>
+            </ResourceDictionary>
         </Grid.Resources>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />

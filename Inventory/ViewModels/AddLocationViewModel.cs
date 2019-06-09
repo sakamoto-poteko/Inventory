@@ -107,7 +107,7 @@ namespace Inventory.ViewModels
 
         protected override bool Insert()
         {
-            var context = InventoryContext;
+            var context = VanillaInventoryContext;
             if (IsSeries)
             {
                 for (var i = _seriesBegin; i <= _seriesEnd; ++i)

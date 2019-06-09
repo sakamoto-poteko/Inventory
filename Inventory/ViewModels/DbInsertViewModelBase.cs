@@ -20,7 +20,6 @@ namespace Inventory.ViewModels
                 ClearFields();
             }
         }
-
         protected abstract void ClearFields();
 
         protected abstract bool CanInsert();
@@ -29,7 +28,7 @@ namespace Inventory.ViewModels
 
         protected virtual bool Insert()
         {
-            var context = InventoryContext;
+            var context = VanillaInventoryContext;
             var model = ConvertToEntity();
 
             try
@@ -51,31 +50,16 @@ namespace Inventory.ViewModels
             return true;
         }
 
-        protected abstract bool ShouldPromptClose();
-
         protected virtual void InsertClose()
         {
             if (Insert())
             {
-                Messenger.Default.Send(new NotificationMessage<WindowMessages>(WindowMessages.CloseWindow, null),
-                    MsgToken);
+                Messenger.Default.Send(WindowMessages.CloseWindow, MsgToken);
+                ClearFields();
             }
         }
-
-        private void Close()
-        {
-            if (ShouldPromptClose())
-            {
-                var result = MessageBox.Show("Close without saving changes?", "Close", MessageBoxButton.YesNo,
-                    MessageBoxImage.Exclamation);
-                if (result == MessageBoxResult.No)
-                    return;
-            }
-            Messenger.Default.Send(WindowMessages.CloseWindow, MsgToken);
-        }
-
+        
         public RelayCommand CommandInsertNext => new RelayCommand(InsertNext, CanInsert);
         public RelayCommand CommandInsertClose => new RelayCommand(InsertClose, CanInsert);
-        public RelayCommand CommandClose => new RelayCommand(Close);
     }
 }

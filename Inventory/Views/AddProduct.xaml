@@ -11,21 +11,11 @@
         WindowStartupLocation="CenterScreen"
         FocusManager.FocusedElement="{Binding ElementName=TbProductName}">
     <Window.Resources>
-        <Style TargetType="{x:Type TextBlock}">
-            <Setter Property="Margin" Value="5,5,0,0" />
-        </Style>
-        <Style TargetType="{x:Type TextBox}">
-            <Setter Property="Margin" Value="5,5,5,0" />
-        </Style>
-        <Style TargetType="{x:Type CheckBox}">
-            <Setter Property="Margin" Value="5,5,5,0" />
-        </Style>
-        <Style TargetType="{x:Type ComboBox}">
-            <Setter Property="Margin" Value="5,5,5,0" />
-        </Style>
-        <Style TargetType="{x:Type Button}">
-            <Setter Property="Margin" Value="5,5,5,0" />
-        </Style>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="MarginResources.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -67,8 +57,9 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 
-                <Label Grid.Row="0" Grid.Column="0" Content="_Footprint" />
+                <Label Grid.Row="0" Grid.Column="0" Content="Footprint" />
                 <ComboBox x:Name="CbFootprint" Grid.Row="0" Grid.Column="1" ItemsSource="{Binding Footprints}"
+                          VerticalAlignment="Center" VerticalContentAlignment="Center"
                           DisplayMemberPath="FootprintName" SelectedValuePath="FootprintId"
                           SelectedValue="{Binding SelectedFootprintId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 

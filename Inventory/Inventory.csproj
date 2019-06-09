@@ -31,6 +31,9 @@
     <None Remove="Views\ControlTemplates.xaml" />
     <None Remove="Views\DPIFix.xaml" />
     <None Remove="Views\InventoryManager.xaml" />
+    <None Remove="Views\MarginResources.xaml" />
+    <None Remove="Views\ViewLocations.xaml" />
+    <None Remove="Views\ViewSuppliers.xaml" />
   </ItemGroup>
 
   <ItemGroup>

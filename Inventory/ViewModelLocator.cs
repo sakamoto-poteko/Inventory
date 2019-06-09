@@ -18,5 +18,8 @@ namespace Inventory
         public AddFootprintViewModel AddFootprintViewModel => _serviceProvider.GetService<AddFootprintViewModel>();
         public AddLocationViewModel AddLocationViewModel => _serviceProvider.GetService<AddLocationViewModel>();
         public AddProductViewModel AddProductViewModel => _serviceProvider.GetService<AddProductViewModel>();
+
+        public ViewSuppliersViewModel ViewSuppliersViewModel => _serviceProvider.GetService<ViewSuppliersViewModel>();
+        public ViewLocationsViewModel ViewLocationsViewModel => _serviceProvider.GetService<ViewLocationsViewModel>();
     }
 }

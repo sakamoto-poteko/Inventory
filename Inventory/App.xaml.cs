@@ -25,7 +25,7 @@ namespace Inventory
 
         public ViewModelLocator ViewModelLocator { get; private set; }
 
-        private List<Type> _eagerSingletonList = new List<Type>();
+        private readonly List<Type> _eagerSingletonList = new List<Type>();
 
         protected override void OnStartup(StartupEventArgs e)
         {
@@ -60,7 +60,12 @@ namespace Inventory
             services.AddSingleton<AddSupplierViewModel>();
             services.AddSingleton<AddFootprintViewModel>();
             services.AddSingleton<AddLocationViewModel>();
-            services.AddSingleton<AddProductViewModel>();
+
+            // Any view model that loads other table shall be transient, in order to reload on every window
+            services.AddTransient<AddProductViewModel>();
+
+            services.AddTransient<ViewSuppliersViewModel>();
+            services.AddTransient<ViewLocationsViewModel>();
 
             _eagerSingletonList.Add(typeof(AddSupplierViewModel));
             _eagerSingletonList.Add(typeof(AddFootprintViewModel));

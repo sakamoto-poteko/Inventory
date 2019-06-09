@@ -78,9 +78,10 @@ namespace Inventory.ViewModels
 
         private void PopulateFootprints()
         {
-            var footprints = InventoryContext.Footprints.ToList();
+            var oldId = SelectedFootprintId;
+            var footprints = VanillaInventoryContext.Footprints.OrderBy(f => f.FootprintName).ToList();
             Footprints = new ObservableCollection<Footprint>(footprints);
-            
+            SelectedFootprintId = oldId;
         }
 
         private void NewFootprint()

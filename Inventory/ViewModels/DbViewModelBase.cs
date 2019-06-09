@@ -5,6 +5,8 @@ using System.Diagnostics;
 using System.Text;
 using System.Windows;
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Messaging;
+using Inventory.Framework;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -17,7 +19,7 @@ namespace Inventory.ViewModels
         /// <summary>
         /// Get a new ef InventoryContext
         /// </summary>
-        protected InventoryContext InventoryContext => ((App) Application.Current).ServiceProvider.GetService<InventoryContext>();
+        protected InventoryContext VanillaInventoryContext => ((App) Application.Current).ServiceProvider.GetService<InventoryContext>();
 
         protected bool IsUniqueRowViolation(DbUpdateException e)
         {
@@ -29,5 +31,26 @@ namespace Inventory.ViewModels
 
             return false;
         }
+
+        protected string WildcardToLike(string like)
+        {
+            return like.Replace('?', '_').Replace('*', '%');
+        }
+
+        protected abstract bool ShouldPromptClose();
+
+        private void Close()
+        {
+            if (ShouldPromptClose())
+            {
+                var result = MessageBox.Show("Close without saving changes?", "Close", MessageBoxButton.YesNo,
+                    MessageBoxImage.Exclamation);
+                if (result == MessageBoxResult.No)
+                    return;
+            }
+            Messenger.Default.Send(WindowMessages.CloseWindow, MsgToken);
+        }
+
+        public RelayCommand CommandClose => new RelayCommand(Close);
     }
 }
