@@ -30,11 +30,11 @@ namespace Inventory.ViewModels
                 catch (DbUpdateException e)
                 {
                     string err;
-                    if (IsUniqueRowViolation(e))
-                        err = "errurv";
+                    if (IsConstraintsViolation(e))
+                        err = "used by other records";
                     else
                         err = e.InnerException?.Message ?? e.Message;
-                    MessageBox.Show($"Unable to insert: {err}", "Insertion failed", MessageBoxButton.OK,
+                    MessageBox.Show($"Unable to save: {err}", "Save failed", MessageBoxButton.OK,
                         MessageBoxImage.Error);
                     return false;
                 }

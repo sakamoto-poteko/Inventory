@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Inventory.Views"
         xmlns:system="clr-namespace:System;assembly=System.Runtime"
         mc:Ignorable="d"
-        Title="ViewLocations" Height="450" Width="800"
+        Title="View Locations" Height="450" Width="800"
         x:Name="WinViewLocations"
         WindowStartupLocation="CenterScreen"
         DataContext="{Binding ViewLocationsViewModel, Source={StaticResource ViewModelLocator}}"

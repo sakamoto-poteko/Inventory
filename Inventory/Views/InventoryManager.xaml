@@ -35,10 +35,10 @@
         <Button x:Name="BtnViewLocation" Content="View Location" Grid.Row="1" Grid.Column="1" Click="BtnViewLocation_Click"/>
 
         <Button x:Name="BtnAddFootprint" Content="Add Footprint" Grid.Row="2" Grid.Column="0" Click="BtnAddFootprint_Click"/>
-        <Button Content="Query Footprint" Grid.Row="2" Grid.Column="1"/>
+        <Button x:Name="BtnViewFootprint" Content="View Footprint" Grid.Row="2" Grid.Column="1" Click="BtnViewFootprint_Click"/>
 
         <Button x:Name="BtnAddProduct" Content="Add Product" Grid.Row="3" Grid.Column="0" Click="BtnAddProduct_Click"/>
-        <Button Content="Query Product" Grid.Row="3" Grid.Column="1"/>
+        <Button x:Name="BtnViewProduct" Content="View Product" Grid.Row="3" Grid.Column="1" Click="BtnViewProduct_Click"/>
 
         <Button Content="Purchase (Inbound)" Grid.Row="4" Grid.Column="0"/>
         <Button Content="Return (Inbound)" Grid.Row="4" Grid.Column="1"/>

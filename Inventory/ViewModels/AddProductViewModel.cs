@@ -127,7 +127,7 @@ namespace Inventory.ViewModels
             return new Product
             {
                 Comments = Comments,
-                Manufacturer = Manufacturer,
+                Manufacturer = string.IsNullOrWhiteSpace(Manufacturer) ? null : Manufacturer,
                 ProductName = ProductName,
                 FootprintId = HaveFootprint ? (int?)SelectedFootprintId : null
             };

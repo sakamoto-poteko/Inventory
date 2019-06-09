@@ -57,5 +57,17 @@ namespace Inventory.Views
             var window = new ViewLocations();
             window.ShowDialog();
         }
+
+        private void BtnViewFootprint_Click(object sender, RoutedEventArgs e)
+        {
+            var window = new ViewFootprints();
+            window.ShowDialog();
+        }
+
+        private void BtnViewProduct_Click(object sender, RoutedEventArgs e)
+        {
+            var window = new ViewProducts();
+            window.ShowDialog();
+        }
     }
 }

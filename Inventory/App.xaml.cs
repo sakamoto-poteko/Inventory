@@ -66,6 +66,8 @@ namespace Inventory
 
             services.AddTransient<ViewSuppliersViewModel>();
             services.AddTransient<ViewLocationsViewModel>();
+            services.AddTransient<ViewFootprintsViewModel>();
+            services.AddTransient<ViewProductsViewModel>();
 
             _eagerSingletonList.Add(typeof(AddSupplierViewModel));
             _eagerSingletonList.Add(typeof(AddFootprintViewModel));

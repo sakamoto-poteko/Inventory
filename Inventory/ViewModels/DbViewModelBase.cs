@@ -21,7 +21,7 @@ namespace Inventory.ViewModels
         /// </summary>
         protected InventoryContext VanillaInventoryContext => ((App) Application.Current).ServiceProvider.GetService<InventoryContext>();
 
-        protected bool IsUniqueRowViolation(DbUpdateException e)
+        protected bool IsConstraintsViolation(DbUpdateException e)
         {
             if (e.InnerException is SqlException ex)
             {

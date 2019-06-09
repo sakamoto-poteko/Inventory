@@ -11,7 +11,7 @@ namespace Inventory
         private readonly IServiceProvider _serviceProvider;
         public ViewModelLocator()
         {
-            _serviceProvider = ((App) Application.Current).ServiceProvider;
+            _serviceProvider = ((App)Application.Current).ServiceProvider;
         }
 
         public AddSupplierViewModel AddSupplierViewModel => _serviceProvider.GetService<AddSupplierViewModel>();
@@ -21,5 +21,7 @@ namespace Inventory
 
         public ViewSuppliersViewModel ViewSuppliersViewModel => _serviceProvider.GetService<ViewSuppliersViewModel>();
         public ViewLocationsViewModel ViewLocationsViewModel => _serviceProvider.GetService<ViewLocationsViewModel>();
+        public ViewFootprintsViewModel ViewFootprintsViewModel => _serviceProvider.GetService<ViewFootprintsViewModel>();
+        public ViewProductsViewModel ViewProductsViewModel => _serviceProvider.GetService<ViewProductsViewModel>();
     }
 }

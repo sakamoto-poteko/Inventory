@@ -83,8 +83,7 @@ namespace Inventory.Migrations
                     b.HasIndex("LocationName");
 
                     b.HasIndex("LocationName", "LocationUnit")
-                        .IsUnique()
-                        .HasFilter("[LocationUnit] IS NOT NULL");
+                        .IsUnique();
 
                     b.ToTable("Locations");
                 });
@@ -110,11 +109,10 @@ namespace Inventory.Migrations
 
                     b.HasIndex("Manufacturer");
 
-                    b.HasIndex("ProductName", "FootprintId")
-                        .IsUnique()
-                        .HasFilter("[FootprintId] IS NOT NULL");
+                    b.HasIndex("ProductName", "FootprintId", "Manufacturer")
+                        .IsUnique();
 
-                    b.ToTable("Product");
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("Inventory.Models.Supplier", b =>

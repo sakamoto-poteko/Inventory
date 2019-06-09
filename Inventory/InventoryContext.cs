@@ -17,17 +17,18 @@ namespace Inventory
         public DbSet<Supplier> Suppliers { get; set; }
         public DbSet<Models.Inventory> Inventories { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
+        public DbSet<Product> Products { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<Footprint>().HasIndex(e => e.FootprintName).IsUnique(true);
 
             builder.Entity<Location>().HasIndex(e => e.LocationName).IsUnique(false);
-            builder.Entity<Location>().HasIndex(e => new { e.LocationName, e.LocationUnit }).IsUnique(true);
+            builder.Entity<Location>().HasIndex(e => new { e.LocationName, e.LocationUnit }).IsUnique(true).HasFilter(null);
 
             builder.Entity<Product>().HasOne(e => e.Footprint).WithMany(e => e.Products)
                 .HasForeignKey(e => e.FootprintId);
-            builder.Entity<Product>().HasIndex(e => new { e.ProductName, e.FootprintId }).IsUnique(true);
+            builder.Entity<Product>().HasIndex(e => new { e.ProductName, e.FootprintId, e.Manufacturer }).IsUnique(true).HasFilter(null);
             builder.Entity<Product>().HasIndex(e => e.Manufacturer).IsUnique(false);
 
             builder.Entity<Models.Inventory>().HasOne(e => e.Location).WithMany(e => e.Inventories)

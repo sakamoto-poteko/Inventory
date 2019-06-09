@@ -125,7 +125,7 @@ namespace Inventory.ViewModels
                 context.Add(new Location
                 {
                     LocationName = LocationName,
-                    LocationUnit = LocationUnit,
+                    LocationUnit = string.IsNullOrWhiteSpace(LocationUnit) ? null : LocationUnit,
                     Comments = Comments
                 });
             }
@@ -137,7 +137,7 @@ namespace Inventory.ViewModels
             catch (DbUpdateException e)
             {
                 string err;
-                if (IsUniqueRowViolation(e))
+                if (IsConstraintsViolation(e))
                     err = "record already existed";
                 else
                     err = e.InnerException?.Message ?? e.Message;
@@ -152,6 +152,7 @@ namespace Inventory.ViewModels
         {
             LocationName = null;
             LocationUnit = null;
+            Comments = null;
         }
 
         protected override bool CanInsert()
