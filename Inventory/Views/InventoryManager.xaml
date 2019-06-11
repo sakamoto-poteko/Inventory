@@ -6,47 +6,72 @@
         mc:Ignorable="d"
         Title="Inventory Manager" Width="800" Height="600"
         WindowStartupLocation="CenterScreen">
-    <Grid>
+    <Grid Margin="5">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
         <Grid.Resources>
-            <Style TargetType="{x:Type Button}">
-                <Setter Property="Margin" Value="5,5,0,0" />
+            <Style TargetType="Button">
+                <Setter Property="Margin" Value="5" />
+                <Setter Property="VerticalAlignment" Value="Stretch" />
+                <Setter Property="FontSize" Value="16" />
+            </Style>
+            <Style TargetType="GroupBox">
+                <Setter Property="FontSize" Value="14" />
+            </Style>
+            <Style TargetType="UniformGrid">
+                <Setter Property="Rows" Value="1" />
             </Style>
         </Grid.Resources>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Button x:Name="BtnAddSupplier" Content="Add Supplier" Click="BtnAddSupplier_Click" />
-        <Button x:Name="BtnViewSuppliers" Content="View Suppliers" Grid.Row="0" Grid.Column="1" Click="BtnViewSuppliers_Click" />
+        <GroupBox Header="Supplier">
+            <UniformGrid>
+                <Button x:Name="BtnAddSupplier" Content="Add" Click="BtnAddSupplier_Click" />
+                <Button x:Name="BtnViewSuppliers" Content="View" Click="BtnViewSuppliers_Click" />
+            </UniformGrid>
+        </GroupBox>
 
-        <Button x:Name="BtnAddLocation" Content="Add Location" Grid.Row="1" Grid.Column="0" Click="BtnAddLocation_Click"/>
-        <Button x:Name="BtnViewLocation" Content="View Location" Grid.Row="1" Grid.Column="1" Click="BtnViewLocation_Click"/>
+        <GroupBox Grid.Row="0" Grid.Column="1" Header="Location">
+            <UniformGrid>
+                <Button x:Name="BtnAddLocation" Content="Add" Click="BtnAddLocation_Click"  />
+                <Button x:Name="BtnViewLocation" Content="View" Click="BtnViewLocation_Click"/>
+            </UniformGrid>
+        </GroupBox>
 
-        <Button x:Name="BtnAddFootprint" Content="Add Footprint" Grid.Row="2" Grid.Column="0" Click="BtnAddFootprint_Click"/>
-        <Button x:Name="BtnViewFootprint" Content="View Footprint" Grid.Row="2" Grid.Column="1" Click="BtnViewFootprint_Click"/>
+        <GroupBox Grid.Row="1" Grid.Column="0" Header="Footprint">
+            <UniformGrid>
+                <Button x:Name="BtnAddFootprint" Content="Add" Click="BtnAddFootprint_Click" />
+                <Button x:Name="BtnViewFootprint" Content="View" Click="BtnViewFootprint_Click" />
+            </UniformGrid>
+        </GroupBox>
 
-        <Button x:Name="BtnAddProduct" Content="Add Product" Grid.Row="3" Grid.Column="0" Click="BtnAddProduct_Click"/>
-        <Button x:Name="BtnViewProduct" Content="View Product" Grid.Row="3" Grid.Column="1" Click="BtnViewProduct_Click"/>
+        <GroupBox Grid.Row="1" Grid.Column="1" Header="Product">
+            <UniformGrid>
+                <Button x:Name="BtnAddProduct" Content="Add" Click="BtnAddProduct_Click" />
+                <Button x:Name="BtnViewProduct" Content="View" Click="BtnViewProduct_Click"/>
+            </UniformGrid>
+        </GroupBox>
 
-        <Button Content="Purchase (Inbound)" Grid.Row="4" Grid.Column="0"/>
-        <Button Content="Return (Inbound)" Grid.Row="4" Grid.Column="1"/>
-        <Button Content="Retrieve (Outbound)" Grid.Row="4" Grid.Column="2"/>
-        <Button Content="Shrinkage (Outbound)" Grid.Row="4" Grid.Column="3"/>
+        <GroupBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Header="Inventory Query">
+            <UniformGrid>
+                <Button Content="View" />
+                <Button Content="Locate" />
+            </UniformGrid>
+        </GroupBox>
 
-        <Button Content="Query Inventory" Grid.Row="5" Grid.Column="1"/>
-        <Button Content="Locate Inventory" Grid.Row="5" Grid.Column="2"/>
-
+        <GroupBox Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Header="Inventory Management">
+            <UniformGrid Columns="4">
+                <Button x:Name="BtnPurchase" Content="Purchase (Inbound)" Click="BtnPurchase_Click"/>
+                <Button Content="Return (Inbound)" />
+                <Button Content="Retrieve (Outbound)" />
+                <Button Content="Shrinkage (Outbound)" />
+            </UniformGrid>
+        </GroupBox>
     </Grid>
 </Window>

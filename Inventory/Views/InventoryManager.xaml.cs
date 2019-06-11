@@ -69,5 +69,11 @@ namespace Inventory.Views
             var window = new ViewProducts();
             window.ShowDialog();
         }
+
+        private void BtnPurchase_Click(object sender, RoutedEventArgs e)
+        {
+            var window = new TransactionPurchase();
+            window.ShowDialog();
+        }
     }
 }

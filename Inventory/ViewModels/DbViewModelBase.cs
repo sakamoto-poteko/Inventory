@@ -19,7 +19,7 @@ namespace Inventory.ViewModels
         /// <summary>
         /// Get a new ef InventoryContext
         /// </summary>
-        protected InventoryContext VanillaInventoryContext => ((App) Application.Current).ServiceProvider.GetService<InventoryContext>();
+        protected InventoryContext VanillaInventoryContext => ((App)Application.Current).ServiceProvider.GetService<InventoryContext>();
 
         protected bool IsConstraintsViolation(DbUpdateException e)
         {
@@ -49,6 +49,37 @@ namespace Inventory.ViewModels
                     return;
             }
             Messenger.Default.Send(WindowMessages.CloseWindow, MsgToken);
+        }
+
+        protected string NullOrWhitespaceAsNull(string val)
+        {
+            return string.IsNullOrWhiteSpace(val) ? null : val;
+        }
+
+        protected static void UndoingChangesDbContextLevel(DbContext context)
+        {
+            foreach (var entry in context.ChangeTracker.Entries())
+            {
+                switch (entry.State)
+                {
+                    case EntityState.Modified:
+                        entry.State = EntityState.Unchanged;
+                        entry.Reload();
+                        break;
+                    case EntityState.Added:
+                        entry.State = EntityState.Detached;
+                        break;
+                    case EntityState.Deleted:
+                        entry.Reload();
+                        break;
+                    case EntityState.Detached:
+                        break;
+                    case EntityState.Unchanged:
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+            }
         }
 
         public RelayCommand CommandClose => new RelayCommand(Close);

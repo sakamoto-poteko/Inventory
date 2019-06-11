@@ -23,5 +23,41 @@ namespace Inventory
         public ViewLocationsViewModel ViewLocationsViewModel => _serviceProvider.GetService<ViewLocationsViewModel>();
         public ViewFootprintsViewModel ViewFootprintsViewModel => _serviceProvider.GetService<ViewFootprintsViewModel>();
         public ViewProductsViewModel ViewProductsViewModel => _serviceProvider.GetService<ViewProductsViewModel>();
+
+        public PurchaseTransactionViewModel PurchaseTransactionViewModel
+        {
+            get
+            {
+                var vm = _serviceProvider.GetService<PurchaseTransactionViewModel>();
+                return vm;
+            }
+        }
+
+
+        public PurchaseTransactionViewModel ReturnTransactionViewModel
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+
+        public PurchaseTransactionViewModel ShrinkageTransactionViewModel
+        {
+            get
+            {
+                var vm = _serviceProvider.GetService<PurchaseTransactionViewModel>();
+                return vm;
+            }
+        }
+
+
+        public PurchaseTransactionViewModel RetrieveTransactionViewModel
+        {
+            get
+            {
+                var vm = _serviceProvider.GetService<PurchaseTransactionViewModel>();
+                return vm;
+            }
+        }
+
     }
 }

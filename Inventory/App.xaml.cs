@@ -29,7 +29,7 @@ namespace Inventory
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            var splash = new SplashScreen("/Splash.png");
+            var splash = new SplashScreen("/Assets/Splash.png");
             splash.Show(true);
 
             var builder = new ConfigurationBuilder()
@@ -68,6 +68,7 @@ namespace Inventory
             services.AddTransient<ViewLocationsViewModel>();
             services.AddTransient<ViewFootprintsViewModel>();
             services.AddTransient<ViewProductsViewModel>();
+            services.AddTransient<PurchaseTransactionViewModel>();
 
             _eagerSingletonList.Add(typeof(AddSupplierViewModel));
             _eagerSingletonList.Add(typeof(AddFootprintViewModel));

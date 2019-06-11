@@ -32,7 +32,7 @@ namespace Inventory.Views
         }
 
         private readonly Regex _positiveNumberRegex =
-            new Regex((string)Application.Current.Resources["PositiveInteger"], RegexOptions.Compiled);
+            new Regex((string)Application.Current.Resources["NonNegativeIntegerRegexString"], RegexOptions.Compiled);
 
         private void TextBoxSeriesBeginEnd_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
