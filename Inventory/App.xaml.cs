@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using Inventory.ViewModels;
@@ -69,11 +70,19 @@ namespace Inventory
             services.AddTransient<ViewFootprintsViewModel>();
             services.AddTransient<ViewProductsViewModel>();
             services.AddTransient<PurchaseTransactionViewModel>();
+            services.AddTransient<ReturnTransactionViewModel>();
+            services.AddTransient<DeductionTransactionBase>();
 
             _eagerSingletonList.Add(typeof(AddSupplierViewModel));
             _eagerSingletonList.Add(typeof(AddFootprintViewModel));
             _eagerSingletonList.Add(typeof(AddLocationViewModel));
             _eagerSingletonList.Add(typeof(AddProductViewModel));
         }
+
+        public static Regex PriceRegex { get; } = new Regex((string) Current.Resources["PriceRegexString"],
+            RegexOptions.Compiled);
+
+        public static Regex PositiveIntergerRegex { get; } =
+            new Regex((string) Current.Resources["NonNegativeIntegerRegexString"], RegexOptions.Compiled);
     }
 }

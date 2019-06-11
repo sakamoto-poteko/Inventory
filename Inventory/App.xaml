@@ -8,10 +8,6 @@
              StartupUri="Views/InventoryManager.xaml">
     <Application.Resources>
         <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Views/ControlTemplates.xaml" />
-            </ResourceDictionary.MergedDictionaries>
-            
             <local:ViewModelLocator x:Key="ViewModelLocator" />
             
             <extensions:InvertedBoolConverter x:Key="InvertedBoolConverter" />
@@ -21,14 +17,10 @@
             </extensions:ValueConverterGroup>
             <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
             
-            <system:String x:Key="NonNegativeIntegerRegexString">^[0-9]+$</system:String>
-            <system:String x:Key="PriceRegexString">^[0-9]*\.?[0-9]{0,2}$</system:String>
-
-            <system:String x:Key="NullPromptString">&lt;null&gt;</system:String>
-            <system:String x:Key="NullManufacturerString">&lt;unknown manufacturer&gt;</system:String>
-            <system:String x:Key="NullFootprintString">&lt;no footprint&gt;</system:String>
-        
-            <validators:RegexValidationRule x:Key="PriceValidationRule" Pattern="{StaticResource PriceRegexString}" />
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/StringResources.xaml" />
+                <ResourceDictionary Source="Views/ControlTemplates.xaml" />
+            </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

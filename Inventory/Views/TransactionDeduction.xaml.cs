@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -16,14 +15,14 @@ using Inventory.ViewModels;
 namespace Inventory.Views
 {
     /// <summary>
-    /// Interaction logic for TransactionPurchase.xaml
+    /// Interaction logic for TransactionDeduction.xaml
     /// </summary>
-    public partial class TransactionPurchase : Window
+    public partial class TransactionDeduction : Window
     {
-        public TransactionPurchase()
+        public TransactionDeduction()
         {
             InitializeComponent();
-            Messenger.Default.Register<WindowMessages>(this, PurchaseTransactionViewModel.MessageToken,
+            Messenger.Default.Register<WindowMessages>(this, DeductionTransactionBase.MessageToken,
                 msg =>
                 {
                     if (msg == WindowMessages.CloseWindow)
@@ -31,10 +30,6 @@ namespace Inventory.Views
                 });
         }
 
-        private void TbPrice_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            e.Handled = !App.PriceRegex.IsMatch(e.Text);
-        }
 
         private void TbQuantity_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {

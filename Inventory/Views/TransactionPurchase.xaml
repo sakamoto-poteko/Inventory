@@ -61,77 +61,8 @@
         <TabControl Grid.Row="0" Grid.Column="1" Margin="5,0,0,0">
             <!--Tab for existing inventory-->
             <TabItem Header="Ex_isting Inventory" IsSelected="{Binding CreateNewInventory, Mode=OneWay, Converter={StaticResource InvertedBoolConverter}}">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="auto"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="auto"/>
-                    </Grid.RowDefinitions>
-
-
-                    <Label Content="Inventory (Search)" Grid.Row="0" Grid.Column="0" IsEnabled="{Binding CreateNewInventory, Mode=OneWay, Converter={StaticResource InvertedBoolConverter}}" />
-                    <TextBox Grid.Row="0" Grid.Column="1" x:Name="TbInventoryKeyword" Text="{Binding InventoryKeyword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                             IsEnabled="{Binding CreateNewInventory, Mode=OneWay, Converter={StaticResource InvertedBoolConverter}}" />
-                    <Button Grid.Row="0" Grid.Column="2" IsDefault="{Binding IsFocused, ElementName=TbInventoryKeyword}" FontFamily="Segoe MDL2 Assets" Content="&#xE11A;" Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}"
-                    IsEnabled="{Binding CreateNewInventory, Mode=OneWay, Converter={StaticResource InvertedBoolConverter}}" 
-                    Command="{Binding CommandSearchInventory}" />
-
-                    <ListView Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" 
-                      ItemsSource="{Binding InventoriesList}" SelectedValue="{Binding SelectedInventory}"
-                      IsEnabled="{Binding CreateNewInventory, Mode=OneWay, Converter={StaticResource InvertedBoolConverter}}">
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <WrapPanel>
-                                    <TextBlock Text="{Binding Product.ProductName}" />
-                                    <TextBlock Text="@" />
-                                    <TextBlock Text="{Binding Product.Footprint.FootprintName, TargetNullValue={StaticResource NullFootprintString}}" />
-                                    <TextBlock Text="/" />
-                                    <TextBlock Text="{Binding Product.Manufacturer, TargetNullValue={StaticResource NullManufacturerString}}" />
-                                    <TextBlock Text=" (" />
-                                    <TextBlock Text="{Binding UniqueId}" />
-                                    <TextBlock Text=")" />
-                                </WrapPanel>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-
-                    <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3">
-                        <Grid.Resources>
-                            <Style TargetType="TextBox">
-                                <Setter Property="IsReadOnly" Value="True" />
-                                <Setter Property="Margin" Value="0,5,0,0" />
-                            </Style>
-                        </Grid.Resources>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="auto"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="auto"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                        </Grid.RowDefinitions>
-                        <Label Content="Product Name" />
-                        <TextBox Grid.Row="0" Grid.Column="1" IsTabStop="False" Text="{Binding InventoryProduct.ProductName, Mode=OneWay}" />
-                        <Label Grid.Row="0" Grid.Column="2" Content="Manufacturer" />
-                        <TextBox Grid.Row="0" Grid.Column="3" IsTabStop="False" Text="{Binding InventoryProduct.Manufacturer, Mode=OneWay}" />
-                        <Label Grid.Row="1" Grid.Column="0" Content="Footprint" />
-                        <TextBox Grid.Row="1" Grid.Column="1" IsTabStop="False" Text="{Binding InventoryProduct.Footprint.FootprintName, Mode=OneWay, TargetNullValue={StaticResource NullFootprintString}}" />
-                        <Label   Grid.Row="1" Grid.Column="2" Content="Location Name" />
-                        <TextBox Grid.Row="1" Grid.Column="3" IsTabStop="False" Text="{Binding InventoryLocation.LocationName, Mode=OneWay}" />
-                        <Label   Grid.Row="2" Grid.Column="0" Content="Location Unit" />
-                        <TextBox Grid.Row="2" Grid.Column="1" IsTabStop="False" Text="{Binding InventoryLocation.LocationUnit, Mode=OneWay, TargetNullValue={StaticResource NullPromptString}}" />
-                        <Label   Grid.Row="2" Grid.Column="2" Content="Quantity" />
-                        <TextBox Grid.Row="2" Grid.Column="3" IsTabStop="False" Text="{Binding InventoryQuantity, Mode=OneWay}" />
-                    </Grid>
-                </Grid>
+                <Frame Template="{StaticResource InventorySearchSuppliersTemplate}"
+                       DataContext="{Binding DataContext, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" />
             </TabItem>
 
             <!--Tab for new inventory-->
@@ -151,7 +82,7 @@
                             <RowDefinition Height="auto"/>
                         </Grid.RowDefinitions>
                         <Label Content="Product Name" />
-                        <TextBox Grid.Row="0" Grid.Column="1" x:Name="TbProductKeyword" Text="{Binding ProductNameKeyword}" />
+                        <TextBox Grid.Row="0" Grid.Column="1" x:Name="TbProductKeyword" Text="{Binding ProductNameKeyword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         <Button Margin="5,5,0,0" Grid.Row="0" Grid.Column="2" IsDefault="{Binding IsFocused, ElementName=TbProductKeyword}" 
                             FontFamily="Segoe MDL2 Assets" Content="&#xE11A;" Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}"
                             Command="{Binding CommandSearchProduct}"/>
@@ -173,7 +104,7 @@
 
 
                         <Label Grid.Row="2" Grid.Column="0" Content="Location Name" />
-                        <TextBox Grid.Row="2" Grid.Column="1" x:Name="TbLocationKeyword" Text="{Binding LocationNameKeyword}" />
+                        <TextBox Grid.Row="2" Grid.Column="1" x:Name="TbLocationKeyword" Text="{Binding LocationNameKeyword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         <Button Margin="5,5,0,0" Grid.Row="2" Grid.Column="2" IsDefault="{Binding IsFocused, ElementName=TbLocationKeyword}" 
                                 FontFamily="Segoe MDL2 Assets" Content="&#xE11A;" Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}"
                                 Command="{Binding CommandSearchLocation}"/>
@@ -228,16 +159,6 @@
             </Grid>
         </GroupBox>
 
-
-        <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <Button Content="Insert &amp; _New" Command="{Binding CommandInsertNext}" IsDefault="{Binding IsKeyboardFocusWithin, ElementName=GbPurchaseInfo}"/>
-            <Button Grid.Column="1" Content="Insert &amp; _Close" Command="{Binding CommandInsertClose}" />
-            <Button Grid.Column="2" Content="Close (_x)" Command="{Binding CommandClose}" IsCancel="True"/>
-        </Grid>
+        <Frame Template="{StaticResource InventoryManagementCommandsTemplate}" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" />
     </Grid>
 </Window>

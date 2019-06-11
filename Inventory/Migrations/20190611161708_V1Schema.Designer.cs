@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Inventory.Migrations
 {
     [DbContext(typeof(InventoryContext))]
-    [Migration("20190606035151_Init")]
-    partial class Init
+    [Migration("20190611161708_V1Schema")]
+    partial class V1Schema
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -54,6 +54,9 @@ namespace Inventory.Migrations
 
                     b.Property<int>("Quantity");
 
+                    b.Property<string>("UniqueId")
+                        .IsRequired();
+
                     b.HasKey("Id");
 
                     b.HasIndex("LocationId");
@@ -82,8 +85,7 @@ namespace Inventory.Migrations
                     b.HasIndex("LocationName");
 
                     b.HasIndex("LocationName", "LocationUnit")
-                        .IsUnique()
-                        .HasFilter("[LocationUnit] IS NOT NULL");
+                        .IsUnique();
 
                     b.ToTable("Locations");
                 });
@@ -109,11 +111,10 @@ namespace Inventory.Migrations
 
                     b.HasIndex("Manufacturer");
 
-                    b.HasIndex("ProductName", "FootprintId")
-                        .IsUnique()
-                        .HasFilter("[FootprintId] IS NOT NULL");
+                    b.HasIndex("ProductName", "FootprintId", "Manufacturer")
+                        .IsUnique();
 
-                    b.ToTable("Product");
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("Inventory.Models.Supplier", b =>
@@ -147,11 +148,13 @@ namespace Inventory.Migrations
 
                     b.Property<int>("InventoryId");
 
-                    b.Property<int>("Price");
+                    b.Property<int?>("Price");
 
                     b.Property<int>("Quantity");
 
-                    b.Property<int>("SupplierId");
+                    b.Property<int?>("SupplierId");
+
+                    b.Property<DateTime>("Time");
 
                     b.HasKey("Id");
 
@@ -194,9 +197,7 @@ namespace Inventory.Migrations
 
                     b.HasOne("Inventory.Models.Supplier", "Supplier")
                         .WithMany("Transactions")
-                        .HasForeignKey("SupplierId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("SupplierId");
                 });
 #pragma warning restore 612, 618
         }

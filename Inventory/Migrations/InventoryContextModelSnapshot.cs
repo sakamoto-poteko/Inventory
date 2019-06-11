@@ -150,7 +150,7 @@ namespace Inventory.Migrations
 
                     b.Property<int>("Quantity");
 
-                    b.Property<int>("SupplierId");
+                    b.Property<int?>("SupplierId");
 
                     b.Property<DateTime>("Time");
 
@@ -195,9 +195,7 @@ namespace Inventory.Migrations
 
                     b.HasOne("Inventory.Models.Supplier", "Supplier")
                         .WithMany("Transactions")
-                        .HasForeignKey("SupplierId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("SupplierId");
                 });
 #pragma warning restore 612, 618
         }

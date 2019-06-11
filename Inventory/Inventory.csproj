@@ -28,6 +28,7 @@
     <None Remove="Assets\Splash.png" />
     <None Remove="Resources\database-search.png" />
     <None Remove="Splash.png" />
+    <None Remove="StringResources.xaml" />
     <None Remove="Views\AddFootprint.xaml" />
     <None Remove="Views\AddLocation.xaml" />
     <None Remove="Views\AddProduct.xaml" />
@@ -37,8 +38,11 @@
     <None Remove="Views\DPIFix.xaml" />
     <None Remove="Views\InventoryManager.xaml" />
     <None Remove="Views\MarginResources.xaml" />
+    <None Remove="Views\TransactionDeduction.xaml" />
     <None Remove="Views\TransactionPurchase.xaml" />
+    <None Remove="Views\TransactionReturn.xaml" />
     <None Remove="Views\ViewFootprints.xaml" />
+    <None Remove="Views\ViewInventory.xaml" />
     <None Remove="Views\ViewLocations.xaml" />
     <None Remove="Views\ViewProducts.xaml" />
     <None Remove="Views\ViewSuppliers.xaml" />

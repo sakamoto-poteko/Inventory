@@ -1,9 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Inventory.Migrations
 {
-    public partial class Init : Migration
+    public partial class V1Schema : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -51,7 +52,7 @@ namespace Inventory.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Product",
+                name: "Products",
                 columns: table => new
                 {
                     ProductId = table.Column<int>(nullable: false)
@@ -63,9 +64,9 @@ namespace Inventory.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Product", x => x.ProductId);
+                    table.PrimaryKey("PK_Products", x => x.ProductId);
                     table.ForeignKey(
-                        name: "FK_Product_Footprints_FootprintId",
+                        name: "FK_Products_Footprints_FootprintId",
                         column: x => x.FootprintId,
                         principalTable: "Footprints",
                         principalColumn: "FootprintId",
@@ -79,6 +80,7 @@ namespace Inventory.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     ProductId = table.Column<int>(nullable: false),
+                    UniqueId = table.Column<string>(nullable: false),
                     LocationId = table.Column<int>(nullable: false),
                     Quantity = table.Column<int>(nullable: false),
                     Comments = table.Column<string>(nullable: true)
@@ -93,9 +95,9 @@ namespace Inventory.Migrations
                         principalColumn: "LocationId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Inventories_Product_ProductId",
+                        name: "FK_Inventories_Products_ProductId",
                         column: x => x.ProductId,
-                        principalTable: "Product",
+                        principalTable: "Products",
                         principalColumn: "ProductId",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -108,9 +110,10 @@ namespace Inventory.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     InventoryId = table.Column<int>(nullable: false),
                     Direction = table.Column<int>(nullable: false),
-                    SupplierId = table.Column<int>(nullable: false),
+                    SupplierId = table.Column<int>(nullable: true),
                     Quantity = table.Column<int>(nullable: false),
-                    Price = table.Column<int>(nullable: false),
+                    Price = table.Column<int>(nullable: true),
+                    Time = table.Column<DateTime>(nullable: false),
                     Comments = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -127,7 +130,7 @@ namespace Inventory.Migrations
                         column: x => x.SupplierId,
                         principalTable: "Suppliers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -156,25 +159,23 @@ namespace Inventory.Migrations
                 name: "IX_Locations_LocationName_LocationUnit",
                 table: "Locations",
                 columns: new[] { "LocationName", "LocationUnit" },
-                unique: true,
-                filter: "[LocationUnit] IS NOT NULL");
+                unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Product_FootprintId",
-                table: "Product",
+                name: "IX_Products_FootprintId",
+                table: "Products",
                 column: "FootprintId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Product_Manufacturer",
-                table: "Product",
+                name: "IX_Products_Manufacturer",
+                table: "Products",
                 column: "Manufacturer");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Product_ProductName_FootprintId",
-                table: "Product",
-                columns: new[] { "ProductName", "FootprintId" },
-                unique: true,
-                filter: "[FootprintId] IS NOT NULL");
+                name: "IX_Products_ProductName_FootprintId_Manufacturer",
+                table: "Products",
+                columns: new[] { "ProductName", "FootprintId", "Manufacturer" },
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Suppliers_Name",
@@ -208,7 +209,7 @@ namespace Inventory.Migrations
                 name: "Locations");
 
             migrationBuilder.DropTable(
-                name: "Product");
+                name: "Products");
 
             migrationBuilder.DropTable(
                 name: "Footprints");

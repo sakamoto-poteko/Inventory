@@ -22,7 +22,6 @@ namespace Inventory.Models
 
         public InventoryDirection Direction { get; set; }
 
-        [Required]
         public Supplier Supplier { get; set; }
 
         public int Quantity { get; set; }

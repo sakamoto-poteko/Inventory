@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -16,29 +15,19 @@ using Inventory.ViewModels;
 namespace Inventory.Views
 {
     /// <summary>
-    /// Interaction logic for TransactionPurchase.xaml
+    /// Interaction logic for ViewInventory.xaml
     /// </summary>
-    public partial class TransactionPurchase : Window
+    public partial class ViewInventory : Window
     {
-        public TransactionPurchase()
+        public ViewInventory()
         {
             InitializeComponent();
-            Messenger.Default.Register<WindowMessages>(this, PurchaseTransactionViewModel.MessageToken,
+            Messenger.Default.Register<WindowMessages>(this, DeductionTransactionBase.MessageToken,
                 msg =>
                 {
                     if (msg == WindowMessages.CloseWindow)
                         Close();
                 });
-        }
-
-        private void TbPrice_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            e.Handled = !App.PriceRegex.IsMatch(e.Text);
-        }
-
-        private void TbQuantity_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            e.Handled = !App.PositiveIntergerRegex.IsMatch(e.Text);
         }
     }
 }

@@ -1,10 +1,19 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:Inventory.Views">
+                    xmlns:local="clr-namespace:Inventory.Views"
+                    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                    xmlns:viewModels="clr-namespace:Inventory.ViewModels"
+                    mc:Ignorable="d">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/StringResources.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
     <ControlTemplate x:Key="InsertWindowTemplate" TargetType="Window">
         <Border Background="{TemplateBinding Background}" 
                 BorderBrush="{TemplateBinding BorderBrush}" 
-                BorderThickness="{TemplateBinding BorderThickness}">
+                BorderThickness="{TemplateBinding BorderThickness}"
+                DataContext="{TemplateBinding DataContext}">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
@@ -18,7 +27,7 @@
                 <Grid Grid.Row="2">
                     <Grid.Resources>
                         <Style TargetType="{x:Type Button}">
-                            <Setter Property="Margin" Value="5,5,5,5" />
+                            <Setter Property="Margin" Value="5" />
                         </Style>
                     </Grid.Resources>
                     <Grid.ColumnDefinitions>
@@ -31,6 +40,125 @@
                     <Button Content="Close (_x)" Grid.Column="2" IsCancel="True" Command="{Binding CommandClose}" />
                 </Grid>
             </Grid>
+        </Border>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="InventorySearchSuppliersTemplate" TargetType="Frame">
+        <ControlTemplate.Resources>
+            <Style TargetType="TextBox">
+                <Setter Property="VerticalAlignment" Value="Center" />
+                <Setter Property="VerticalContentAlignment" Value="Center" />
+            </Style>
+            <Style TargetType="Label">
+                <Setter Property="VerticalAlignment" Value="Center" />
+                <Setter Property="VerticalContentAlignment" Value="Center" />
+            </Style>
+        </ControlTemplate.Resources>
+        <Border Background="{TemplateBinding Background}" 
+                BorderBrush="{TemplateBinding BorderBrush}" 
+                BorderThickness="{TemplateBinding BorderThickness}"
+                DataContext="{TemplateBinding DataContext}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+
+
+                <Label Content="Inventory (Search)" Grid.Row="0" Grid.Column="0"  Margin="0,0,5,5"
+                       VerticalContentAlignment="Center" VerticalAlignment="Center" />
+                <TextBox Grid.Row="0" Grid.Column="1" x:Name="TbInventoryKeyword" 
+                         Margin="0,0,5,5" VerticalAlignment="Center" VerticalContentAlignment="Center" 
+                         Text="{Binding InventoryKeyword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    <TextBox.InputBindings>
+                        <KeyBinding Key="Return" Command="{Binding CommandSearchInventory}" />
+                    </TextBox.InputBindings>
+                </TextBox>
+                <Button Grid.Row="0" Grid.Column="2" IsDefault="{Binding IsFocused, ElementName=TbInventoryKeyword}" 
+                         VerticalAlignment="Stretch" Margin="0,0,0,5"
+                            FontFamily="Segoe MDL2 Assets" Content="&#xE11A;" Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}"
+                            Command="{Binding CommandSearchInventory}" />
+
+                <ListView Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" 
+                      ItemsSource="{Binding InventoriesList}" SelectedValue="{Binding SelectedInventory}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <WrapPanel>
+                                <TextBlock Text="{Binding Product.ProductName}" />
+                                <TextBlock Text="@" />
+                                <TextBlock Text="{Binding Product.Footprint.FootprintName, TargetNullValue={StaticResource NullFootprintString}}" />
+                                <TextBlock Text="/" />
+                                <TextBlock Text="{Binding Product.Manufacturer, TargetNullValue={StaticResource NullManufacturerString}}" />
+                                <TextBlock Text=" (" />
+                                <TextBlock Text="{Binding UniqueId}" />
+                                <TextBlock Text=")" />
+                            </WrapPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+                <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3">
+                    <Grid.Resources>
+                        <Style TargetType="TextBox">
+                            <Setter Property="IsReadOnly" Value="True" />
+                            <Setter Property="Margin" Value="0,5,0,0" />
+                        </Style>
+                    </Grid.Resources>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <Label Content="Product Name" />
+                    <TextBox Grid.Row="0" Grid.Column="1" IsTabStop="False" Text="{Binding InventoryProduct.ProductName, Mode=OneWay}" />
+                    <Label Grid.Row="0" Grid.Column="2" Content="Manufacturer" />
+                    <TextBox Grid.Row="0" Grid.Column="3" IsTabStop="False" Text="{Binding InventoryProduct.Manufacturer, Mode=OneWay}" />
+                    <Label Grid.Row="1" Grid.Column="0" Content="Footprint" />
+                    <TextBox Grid.Row="1" Grid.Column="1" IsTabStop="False" Text="{Binding InventoryProduct.Footprint.FootprintName, Mode=OneWay, TargetNullValue={StaticResource NullFootprintString}}" />
+                    <Label   Grid.Row="1" Grid.Column="2" Content="Quantity" />
+                    <TextBox Grid.Row="1" Grid.Column="3" IsTabStop="False" Text="{Binding InventoryQuantity, Mode=OneWay}" />
+                    <Label   Grid.Row="2" Grid.Column="0" Content="Location Name" />
+                    <TextBox Grid.Row="2" Grid.Column="1" IsTabStop="False" Text="{Binding InventoryLocation.LocationName, Mode=OneWay}" />
+                    <Label   Grid.Row="2" Grid.Column="2" Content="Location Unit" />
+                    <TextBox Grid.Row="2" Grid.Column="3" IsTabStop="False" Text="{Binding InventoryLocation.LocationUnit, Mode=OneWay, TargetNullValue={StaticResource NullPromptString}}" />
+                    
+                </Grid>
+            </Grid>
+        </Border>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="InventoryManagementCommandsTemplate" TargetType="Frame">
+        <ControlTemplate.Resources>
+            <Style TargetType="TextBox">
+                <Setter Property="VerticalAlignment" Value="Center" />
+                <Setter Property="VerticalContentAlignment" Value="Center" />
+            </Style>
+            <Style TargetType="Label">
+                <Setter Property="VerticalAlignment" Value="Center" />
+                <Setter Property="VerticalContentAlignment" Value="Center" />
+            </Style>
+        </ControlTemplate.Resources>
+        <Border Background="{TemplateBinding Background}" 
+                BorderBrush="{TemplateBinding BorderBrush}" 
+                BorderThickness="{TemplateBinding BorderThickness}"
+                DataContext="{TemplateBinding DataContext}">
+            <UniformGrid Columns="3" Rows="1">
+                <Button Margin="0,5,5,5" Content="Insert &amp; _New" Command="{Binding CommandInsertNext}" IsDefault="{Binding IsKeyboardFocusWithin, ElementName=GbPurchaseInfo}"/>
+                <Button Margin="5" Content="Insert &amp; _Close" Command="{Binding CommandInsertClose}" />
+                <Button Margin="5,5,0,5" Content="Close (_x)" Command="{Binding CommandClose}" IsCancel="True"/>
+            </UniformGrid>
         </Border>
     </ControlTemplate>
 </ResourceDictionary>

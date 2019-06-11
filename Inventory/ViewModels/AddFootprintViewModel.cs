@@ -18,7 +18,7 @@ namespace Inventory.ViewModels
             get => _name;
             set
             {
-                _name = value.ToUpper();
+                _name = value?.ToUpper();
                 RaisePropertyChanged();
                 CommandManager.InvalidateRequerySuggested();
             }

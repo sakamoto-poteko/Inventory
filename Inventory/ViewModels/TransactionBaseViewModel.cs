@@ -163,12 +163,12 @@ namespace Inventory.ViewModels
         {
             IQueryable<Models.Inventory> list = _context.Inventories
                 .Include(i => i.Product)
-                .ThenInclude(p => p.Footprint);
+                .ThenInclude(p => p.Footprint)
+                .Include(i => i.Location);
             if (!string.IsNullOrWhiteSpace(InventoryKeyword))
             {
                 var keyword = $"%{WildcardToLike(InventoryKeyword)}%";
-                list = _context.Inventories
-                    .Where(i => EF.Functions.Like(i.Product.ProductName, keyword) ||
+                list = list.Where(i => EF.Functions.Like(i.Product.ProductName, keyword) ||
                                 EF.Functions.Like(i.UniqueId, keyword));
             }
 

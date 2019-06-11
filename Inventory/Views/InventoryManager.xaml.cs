@@ -75,5 +75,23 @@ namespace Inventory.Views
             var window = new TransactionPurchase();
             window.ShowDialog();
         }
+
+        private void BtnReturn_Click(object sender, RoutedEventArgs e)
+        {
+            var window = new TransactionReturn();
+            window.ShowDialog();
+        }
+
+        private void BtnRetrieve_Click(object sender, RoutedEventArgs e)
+        {
+            var window = new TransactionDeduction();
+            window.ShowDialog();
+        }
+
+        private void BtnViewInventory_Click(object sender, RoutedEventArgs e)
+        {
+            var window = new ViewInventory();
+            window.ShowDialog();
+        }
     }
 }

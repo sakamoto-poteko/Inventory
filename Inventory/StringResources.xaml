@@ -1,0 +1,11 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Inventory"
+                    xmlns:system="clr-namespace:System;assembly=System.Runtime">
+    <system:String x:Key="NonNegativeIntegerRegexString">^[0-9]+$</system:String>
+    <system:String x:Key="PriceRegexString">^[0-9]*\.?[0-9]{0,2}$</system:String>
+
+    <system:String x:Key="NullPromptString">&lt;null&gt;</system:String>
+    <system:String x:Key="NullManufacturerString">&lt;unknown manufacturer&gt;</system:String>
+    <system:String x:Key="NullFootprintString">&lt;no footprint&gt;</system:String>
+</ResourceDictionary>
