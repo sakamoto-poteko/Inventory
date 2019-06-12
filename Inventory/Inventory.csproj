@@ -38,6 +38,7 @@
     <None Remove="Views\DPIFix.xaml" />
     <None Remove="Views\InventoryManager.xaml" />
     <None Remove="Views\MarginResources.xaml" />
+    <None Remove="Views\ShowInventories.xaml" />
     <None Remove="Views\TransactionDeduction.xaml" />
     <None Remove="Views\TransactionPurchase.xaml" />
     <None Remove="Views\TransactionReturn.xaml" />

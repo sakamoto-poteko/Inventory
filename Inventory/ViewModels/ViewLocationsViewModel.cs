@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Input;
+using Inventory.Framework;
 using Inventory.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -113,6 +114,26 @@ namespace Inventory.ViewModels
             }
         }
 
+        private void ViewInventories()
+        {
+            var context = VanillaInventoryContext;
+            var inventories = context.Inventories
+                .Include(i => i.Product)
+                .ThenInclude(p => p.Footprint)
+                .Where(i => i.LocationId == SelectedLocation.LocationId).ToList();
+            MessengerInstance.Send(new ShowViewMessage
+            {
+                ViewModel = inventories,
+                ViewToShow = ShowViewMessage.View.InventoryList
+            }, MsgToken);
+        }
+
+        private bool CanViewInventories()
+        {
+            return SelectedLocation != null;
+        }
+
+        public RelayCommand CommandViewInventories => new RelayCommand(ViewInventories, CanViewInventories);
 
         protected override bool ShouldPromptClose()
         {

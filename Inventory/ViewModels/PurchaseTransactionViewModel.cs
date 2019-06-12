@@ -52,7 +52,7 @@ namespace Inventory.ViewModels
             {
                 if (!double.TryParse(_price, out var val))
                     return null;
-                return (uint) (val * 1000.0);
+                return (uint)(val * 1000.0);
             }
         }
 
@@ -180,7 +180,9 @@ namespace Inventory.ViewModels
         private void SetUniqueId()
         {
             Debug.Assert(SelectedProduct != null, nameof(SelectedProduct) + " != null");
-            NewUniqueId = $"{SelectedProduct.ProductName.ToUpper()}@{SelectedProduct.Footprint.FootprintName}";
+            NewUniqueId = SelectedProduct.Footprint == null
+                ? SelectedProduct.ProductName.ToUpper()
+                : $"{SelectedProduct.ProductName.ToUpper()}@{SelectedProduct.Footprint.FootprintName}";
         }
 
         private void SearchProductNameKeyword()
@@ -217,17 +219,17 @@ namespace Inventory.ViewModels
             switch (e.PropertyName)
             {
                 case nameof(InventoryKeyword):
-                {
-                    if (InventoryKeyword?.Length > 2)
-                        SearchInventoryKeyword();
-                    break;
-                }
+                    {
+                        if (InventoryKeyword?.Length > 2)
+                            SearchInventoryKeyword();
+                        break;
+                    }
                 case nameof(SupplierKeyword):
-                {
-                    if (!string.IsNullOrWhiteSpace(SupplierKeyword) && SupplierKeyword.Length > 2)
-                        SearchSupplierKeyword();
-                    break;
-                }
+                    {
+                        if (!string.IsNullOrWhiteSpace(SupplierKeyword) && SupplierKeyword.Length > 2)
+                            SearchSupplierKeyword();
+                        break;
+                    }
             }
         }
 
@@ -262,7 +264,7 @@ namespace Inventory.ViewModels
                         Comments = NullOrWhitespaceAsNull(Comments),
                         Direction = Transaction.InventoryDirection.Addition,
                         Inventory = inventory,
-                        Price = (int?) UintPrice,
+                        Price = (int?)UintPrice,
                         Quantity = IntQuantity.Value,
                         Supplier = SelectedSupplier,
                         Time = TransactionTime

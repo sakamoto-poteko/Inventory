@@ -9,6 +9,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using GalaSoft.MvvmLight.Messaging;
 using Inventory.ViewModels;
 
@@ -27,6 +28,21 @@ namespace Inventory.Views
                 {
                     if (msg == WindowMessages.CloseWindow)
                         Close();
+                });
+            Messenger.Default.Register<ShowViewMessage>(this, ViewLocationsViewModel.MessageToken,
+                msg =>
+                {
+                    if (msg.ViewToShow == ShowViewMessage.View.InventoryList)
+                    {
+                        Dispatcher.Invoke(() =>
+                        {
+                            var window = new ShowInventories()
+                            {
+                                DataContext = msg.ViewModel
+                            };
+                            window.ShowDialog();
+                        });
+                    }
                 });
         }
     }

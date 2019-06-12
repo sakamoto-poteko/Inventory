@@ -27,44 +27,50 @@
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
-        <GroupBox Header="Search">
-            <Grid>
-                <Grid.Resources>
-                    <Style TargetType="CheckBox">
-                        <Setter Property="Margin" Value="5" />
-                        <Setter Property="VerticalContentAlignment" Value="Center" />
-                        <Setter Property="VerticalAlignment" Value="Center" />
-                    </Style>
-                    <Style TargetType="TextBox">
-                        <Setter Property="Margin" Value="5" />
-                        <Setter Property="VerticalContentAlignment" Value="Center" />
-                        <Setter Property="VerticalAlignment" Value="Center" />
-                    </Style>
-                    <Style TargetType="Button">
-                        <Setter Property="Margin" Value="5" />
-                        <Setter Property="VerticalContentAlignment" Value="Center" />
-                        <Setter Property="VerticalAlignment" Value="Center" />
-                    </Style>
-                </Grid.Resources>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="auto" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="auto" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="auto" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="auto" />
-                    <ColumnDefinition Width="auto" />
-                </Grid.ColumnDefinitions>
-                <CheckBox Content="_Name" IsChecked="{Binding LocationNameKeywordEnabled}" />
-                <TextBox x:Name="TbNameKeyword" Grid.Column="1" IsEnabled="{Binding LocationNameKeywordEnabled}" Text="{Binding LocationNameKeyword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                <CheckBox Grid.Column="2" Content="_Unit" IsChecked="{Binding LocationUnitKeywordEnabled}" />
-                <TextBox Grid.Column="3" IsEnabled="{Binding LocationUnitKeywordEnabled}" Text="{Binding LocationUnitKeyword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                <CheckBox Grid.Column="4" Content="_Comments" IsChecked="{Binding CommentsKeywordEnabled}" />
-                <TextBox Grid.Column="5" IsEnabled="{Binding CommentsKeywordEnabled}" Text="{Binding CommentsKeyword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                <Button Grid.Column="6" Content="_Search" Command="{Binding CommandSearch}" IsDefault="True"/>
-            </Grid>
-        </GroupBox>
+        <DockPanel>
+            <GroupBox Header="Inventories" DockPanel.Dock="Right">
+                <Button Margin="5" Content="View" Command="{Binding CommandViewInventories}" />
+            </GroupBox>
+            <GroupBox Header="Search" DockPanel.Dock="Left">
+                <Grid>
+                    <Grid.Resources>
+                        <Style TargetType="CheckBox">
+                            <Setter Property="Margin" Value="5" />
+                            <Setter Property="VerticalContentAlignment" Value="Center" />
+                            <Setter Property="VerticalAlignment" Value="Center" />
+                        </Style>
+                        <Style TargetType="TextBox">
+                            <Setter Property="Margin" Value="5" />
+                            <Setter Property="VerticalContentAlignment" Value="Center" />
+                            <Setter Property="VerticalAlignment" Value="Center" />
+                        </Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Margin" Value="5" />
+                            <Setter Property="VerticalContentAlignment" Value="Center" />
+                            <Setter Property="VerticalAlignment" Value="Center" />
+                        </Style>
+                    </Grid.Resources>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="auto" />
+                    </Grid.ColumnDefinitions>
+                    <CheckBox Content="_Name" IsChecked="{Binding LocationNameKeywordEnabled}" />
+                    <TextBox x:Name="TbNameKeyword" Grid.Column="1" IsEnabled="{Binding LocationNameKeywordEnabled}" Text="{Binding LocationNameKeyword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <CheckBox Grid.Column="2" Content="_Unit" IsChecked="{Binding LocationUnitKeywordEnabled}" />
+                    <TextBox Grid.Column="3" IsEnabled="{Binding LocationUnitKeywordEnabled}" Text="{Binding LocationUnitKeyword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <CheckBox Grid.Column="4" Content="_Comments" IsChecked="{Binding CommentsKeywordEnabled}" />
+                    <TextBox Grid.Column="5" IsEnabled="{Binding CommentsKeywordEnabled}" Text="{Binding CommentsKeyword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <Button Grid.Column="6" Content="_Search" Command="{Binding CommandSearch}" IsDefault="True"/>
+                </Grid>
+            </GroupBox>
+        </DockPanel>
+
 
         <DataGrid Grid.Row="1" Margin="5" 
                   ItemsSource="{Binding Locations}" AutoGenerateColumns="False" 

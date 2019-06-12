@@ -8,4 +8,15 @@ namespace Inventory.ViewModels
     {
         CloseWindow
     }
+
+    public class ShowViewMessage
+    {
+        public enum View
+        {
+            InventoryList,
+        }
+
+        public View ViewToShow { get; set; }
+        public object ViewModel { get; set; }
+    }
 }

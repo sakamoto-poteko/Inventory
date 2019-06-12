@@ -9,26 +9,21 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using GalaSoft.MvvmLight.Messaging;
 using Inventory.Framework;
-using Inventory.ViewModels;
 
 namespace Inventory.Views
 {
     /// <summary>
-    /// Interaction logic for ViewInventory.xaml
+    /// Interaction logic for ShowInventories.xaml
     /// </summary>
-    public partial class ViewInventory : Window
+    public partial class ShowInventories : Window
     {
-        public ViewInventory()
+        public ShowInventories()
         {
             InitializeComponent();
-            Messenger.Default.Register<WindowMessages>(this, DeductionTransactionBase.MessageToken,
-                msg =>
-                {
-                    if (msg == WindowMessages.CloseWindow)
-                        Close();
-                });
         }
+
+        public RelayCommand CommandClose => new RelayCommand(Close);
+
     }
 }
