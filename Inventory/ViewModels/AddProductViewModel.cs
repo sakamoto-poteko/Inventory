@@ -1,11 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Windows.Input;
 using Inventory.Framework;
 using Inventory.Models;
+#if !WINDOWS_UWP
+using System.Windows.Input;
+using System.Windows;
+#endif
 
 namespace Inventory.ViewModels
 {

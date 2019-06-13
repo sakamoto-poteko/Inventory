@@ -1,7 +1,10 @@
 ﻿using System.Collections.Generic;
-using System.Windows;
 using Inventory.Framework;
 using Microsoft.EntityFrameworkCore;
+#if !WINDOWS_UWP
+using System.Windows.Input;
+using System.Windows;
+#endif
 
 namespace Inventory.ViewModels
 {

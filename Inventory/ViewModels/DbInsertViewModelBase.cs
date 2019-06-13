@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows;
-using System.Windows.Forms.VisualStyles;
-using System.Windows.Input;
-using GalaSoft.MvvmLight.Messaging;
+﻿using GalaSoft.MvvmLight.Messaging;
 using Inventory.Framework;
-using Inventory.Models;
 using Microsoft.EntityFrameworkCore;
+#if !WINDOWS_UWP
+using System.Windows.Input;
+using System.Windows;
+#endif
 
 namespace Inventory.ViewModels
 {

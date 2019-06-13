@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
-using System.Windows.Data;
 
 namespace Inventory.Extensions
 {
-    public class InvertedBoolConverter : IValueConverter
+    public class InvertedBoolConverter : CommonValueConveter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        protected override object Convert(object value, Type targetType, object parameter)
         {
             if (value is bool x)
             {
@@ -20,7 +19,7 @@ namespace Inventory.Extensions
             }
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        protected override object ConvertBack(object value, Type targetType, object parameter)
         {
             if (value is bool x)
             {

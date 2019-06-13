@@ -1,8 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows.Input;
 using Inventory.Models;
+#if !WINDOWS_UWP
+using System.Windows.Input;
+using System.Windows;
+#endif
 
 namespace Inventory.ViewModels
 {

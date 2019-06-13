@@ -1,14 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Diagnostics;
-using System.Text;
-using System.Windows;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Messaging;
 using Inventory.Framework;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
+#if WINDOWS_UWP
+using Windows.UI.Xaml;
+#else
+using System.Windows.Input;
+using System.Windows;
+#endif
 
 namespace Inventory.ViewModels
 {
@@ -19,7 +21,7 @@ namespace Inventory.ViewModels
         /// <summary>
         /// Get a new ef InventoryContext
         /// </summary>
-        protected InventoryContext VanillaInventoryContext => ((App)Application.Current).ServiceProvider.GetService<InventoryContext>();
+        protected InventoryContext VanillaInventoryContext => Globals.Instance.ServiceProvider.GetService<InventoryContext>();
 
         protected bool IsConstraintsViolation(DbUpdateException e)
         {

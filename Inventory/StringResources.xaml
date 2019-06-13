@@ -1,11 +1,26 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                     xmlns:local="clr-namespace:Inventory"
-                    xmlns:system="clr-namespace:System;assembly=System.Runtime">
-    <system:String x:Key="NonNegativeIntegerRegexString">^[0-9]+$</system:String>
-    <system:String x:Key="PriceRegexString">^[0-9]*\.?[0-9]{0,2}$</system:String>
+                    xmlns:uwpsystem="using:System"
+                    xmlns:wpfsystem="clr-namespace:System;assembly=System.Runtime"
+                    xmlns:iswpf="clr-namespace:System.Windows.Controls;assembly=PresentationFramework.dll">
 
-    <system:String x:Key="NullPromptString">&lt;null&gt;</system:String>
-    <system:String x:Key="NullManufacturerString">&lt;unknown manufacturer&gt;</system:String>
-    <system:String x:Key="NullFootprintString">&lt;no footprint&gt;</system:String>
+    <mc:AlternateContent>
+        <mc:Choice Requires="iswpf">
+            <wpfsystem:String x:Key="NonNegativeIntegerRegexString">^[0-9]+$</wpfsystem:String>
+            <wpfsystem:String x:Key="PriceRegexString">^[0-9]*\.?[0-9]{0,2}$</wpfsystem:String>
+            <wpfsystem:String x:Key="NullPromptString">&lt;null&gt;</wpfsystem:String>
+            <wpfsystem:String x:Key="NullManufacturerString">&lt;unknown manufacturer&gt;</wpfsystem:String>
+            <wpfsystem:String x:Key="NullFootprintString">&lt;no footprint&gt;</wpfsystem:String>
+        </mc:Choice>
+        <mc:Fallback>
+            <uwpsystem:String x:Key="NonNegativeIntegerRegexString">^[0-9]+$</uwpsystem:String>
+            <uwpsystem:String x:Key="PriceRegexString">^[0-9]*\.?[0-9]{0,2}$</uwpsystem:String>
+            <uwpsystem:String x:Key="NullPromptString">&lt;null&gt;</uwpsystem:String>
+            <uwpsystem:String x:Key="NullManufacturerString">&lt;unknown manufacturer&gt;</uwpsystem:String>
+            <uwpsystem:String x:Key="NullFootprintString">&lt;no footprint&gt;</uwpsystem:String>
+        </mc:Fallback>
+    </mc:AlternateContent>
+    
 </ResourceDictionary>

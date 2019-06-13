@@ -1,0 +1,22 @@
+﻿<Window x:Class="Inventory.Views.ViewInventory"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Inventory.Views"
+        mc:Ignorable="d"
+        Title="View Inventory" Height="450" Width="800"
+        WindowStartupLocation="CenterScreen"
+        DataContext="{Binding DeductionTransactionViewModel, Source={StaticResource ViewModelLocator}}">
+    <Window.InputBindings>
+        <KeyBinding Key="Esc" Command="{Binding CommandClose}" />
+    </Window.InputBindings>
+    <Grid Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+        <Frame Template="{StaticResource InventorySearchSuppliersTemplate}" DataContext="{Binding DataContext, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" />
+    </Grid>
+</Window>

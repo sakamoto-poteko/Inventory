@@ -1,10 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
-using System.Windows;
 using Inventory.Models;
 using Microsoft.EntityFrameworkCore;
+#if !WINDOWS_UWP
+using System.Windows.Input;
+using System.Windows;
+#endif
 
 namespace Inventory.ViewModels
 {

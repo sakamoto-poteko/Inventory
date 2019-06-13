@@ -20,6 +20,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Helpers;
 
+////using GalaSoft.Utilities.Attributes;
 namespace Inventory.Framework
 {
     /// <summary>
@@ -87,8 +88,24 @@ namespace Inventory.Framework
             }
         }
 
+#if SILVERLIGHT
+        /// <summary>
+        /// Occurs when changes occur that affect whether the command should execute.
+        /// </summary>
+        public event EventHandler CanExecuteChanged;
+#elif WINDOWS_UWP
+        /// <summary>
+        /// Occurs when changes occur that affect whether the command should execute.
+        /// </summary>
+        public event EventHandler CanExecuteChanged;
+#elif XAMARIN
+        /// <summary>
+        /// Occurs when changes occur that affect whether the command should execute.
+        /// </summary>
+        public event EventHandler CanExecuteChanged;
+#else
         private EventHandler _requerySuggestedLocal;
-
+        
         /// <summary>
         /// Occurs when changes occur that affect whether the command should execute.
         /// </summary>
@@ -107,12 +124,12 @@ namespace Inventory.Framework
                         handler2 = canExecuteChanged;
                         EventHandler handler3 = (EventHandler)Delegate.Combine(handler2, value);
                         canExecuteChanged = System.Threading.Interlocked.CompareExchange<EventHandler>(
-                            ref _requerySuggestedLocal,
-                            handler3,
+                            ref _requerySuggestedLocal, 
+                            handler3, 
                             handler2);
-                    }
-                    while (canExecuteChanged != handler2);
-
+                    } 
+                    while (canExecuteChanged != handler2); 
+                    
                     CommandManager.RequerySuggested += value;
                 }
             }
@@ -130,16 +147,17 @@ namespace Inventory.Framework
                         handler2 = canExecuteChanged;
                         EventHandler handler3 = (EventHandler)Delegate.Remove(handler2, value);
                         canExecuteChanged = System.Threading.Interlocked.CompareExchange<EventHandler>(
-                            ref this._requerySuggestedLocal,
-                            handler3,
+                            ref this._requerySuggestedLocal, 
+                            handler3, 
                             handler2);
-                    }
-                    while (canExecuteChanged != handler2);
-
+                    } 
+                    while (canExecuteChanged != handler2); 
+                    
                     CommandManager.RequerySuggested -= value;
                 }
             }
         }
+#endif
 
         /// <summary>
         /// Raises the <see cref="CanExecuteChanged" /> event.
@@ -154,7 +172,27 @@ namespace Inventory.Framework
             Justification = "This cannot be an event")]
         public void RaiseCanExecuteChanged()
         {
+#if SILVERLIGHT
+            var handler = CanExecuteChanged;
+            if (handler != null)
+            {
+                handler(this, EventArgs.Empty);
+            }
+#elif WINDOWS_UWP
+            var handler = CanExecuteChanged;
+            if (handler != null)
+            {
+                handler(this, EventArgs.Empty);
+            }
+#elif XAMARIN
+            var handler = CanExecuteChanged;
+            if (handler != null)
+            {
+                handler(this, EventArgs.Empty);
+            }
+#else
             CommandManager.InvalidateRequerySuggested();
+#endif
         }
 
         /// <summary>

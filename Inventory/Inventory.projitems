@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>c45d8028-1523-4ba8-a433-a345e67a52de</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Inventory</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\CommonValueConveter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\InvertedBoolConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\ValueConverterGroup.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Framework\RelayCommand.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Globals.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)InventoryContext.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20190611161708_V1Schema.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20190611161708_V1Schema.Designer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\InventoryContextModelSnapshot.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Footprint.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Inventory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Location.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Product.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Supplier.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Transaction.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelLocator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\AddFootprintViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\AddLocationViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\AddProductViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\AddSupplierViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\DbInsertViewModelBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\DbQueryViewModelBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\DbViewModelBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\DeductionTransactionBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Messages.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\PurchaseTransactionViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ReturnTransactionViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\TransactionBaseViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ViewFootprintsViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ViewLocationsViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ViewProductsViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ViewSuppliersViewModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="$(MSBuildThisFileDirectory)StringResources.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="D:\Projects\Inventory\Inventory\Migrations\20190611161708_V1Schema.Designer.cs">
+      <DependentUpon>20190611161708_V1Schema.cs</DependentUpon>
+    </Compile>
+    <Compile Update="D:\Projects\Inventory\Inventory\Views\AddFootprint.xaml.cs">
+      <DependentUpon>AddFootprint.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+</Project>

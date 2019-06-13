@@ -1,0 +1,27 @@
+﻿<Window x:Class="Inventory.Views.ShowInventories"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Inventory.Views"
+        xmlns:collections="clr-namespace:System.Collections;assembly=System.Runtime"
+        xmlns:models="clr-namespace:Inventory.Models"
+        mc:Ignorable="d"
+        Title="View Inventories" Height="371" Width="600"
+        x:Name="WinShowInventories"
+        WindowStartupLocation="CenterScreen">
+    <Window.InputBindings>
+        <KeyBinding Key="Esc" Command="{Binding Path=CommandClose, ElementName=WinShowInventories}" />
+    </Window.InputBindings>
+    <Grid>
+        <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding DataContext, ElementName=WinShowInventories}" CanUserAddRows="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Unique ID" Binding="{Binding UniqueId}" />
+                <DataGridTextColumn Header="Name" Binding="{Binding Product.ProductName}" />
+                <DataGridTextColumn Header="Footprint" Binding="{Binding Product.Footprint.FootprintName, TargetNullValue={StaticResource NullFootprintString}}" />
+                <DataGridTextColumn Header="Manufacturer" Binding="{Binding Product.Manufacturer, TargetNullValue={StaticResource NullManufacturerString}}" />
+                <DataGridTextColumn Width="*" Header="Comments" Binding="{Binding Comments}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Window>
