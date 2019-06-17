@@ -203,7 +203,6 @@ namespace Inventory.ViewModels
             InventoryKeyword = null;
             InventoriesList = null;
             InventoryKeyword = null;
-            Quantity = "0";
             SelectedInventory = null;
             SupplierKeyword = null;
             TransactionTime = DateTime.Now;
@@ -216,6 +215,24 @@ namespace Inventory.ViewModels
 
             if (Execute())
                 CommandClose.Execute(null);
+        }
+
+        protected IQueryable<Location> SearchLocationNameKeyword(InventoryContext context, string keyword)
+        {
+            var locKeyWords = keyword.Split('-', 2);
+
+            IQueryable<Location> locations = context.Locations;
+            if (!string.IsNullOrWhiteSpace(keyword))
+            {
+                locations = locations.Where(l =>
+                    EF.Functions.Like(l.LocationName, $"{WildcardToLike(locKeyWords[0])}%"));
+                if (locKeyWords.Length == 2)
+                {
+                    locations = locations.Where(l =>
+                        EF.Functions.Like(l.LocationUnit, $"{WildcardToLike(locKeyWords[1])}%"));
+                }
+            }
+            return locations;
         }
     }
 }

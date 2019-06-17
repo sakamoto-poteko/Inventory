@@ -26,6 +26,7 @@ namespace Inventory
 
         public PurchaseTransactionViewModel PurchaseTransactionViewModel => _serviceProvider.GetService<PurchaseTransactionViewModel>();
         public ReturnTransactionViewModel ReturnTransactionViewModel => _serviceProvider.GetService<ReturnTransactionViewModel>();
-        public DeductionTransactionBase DeductionTransactionViewModel => _serviceProvider.GetService<DeductionTransactionBase>();
+        public DeductionTransaction DeductionTransactionViewModel => _serviceProvider.GetService<DeductionTransaction>();
+        public DeductionTransactionByBarcode DeductionTransactionByBarcodeViewModel => _serviceProvider.GetService<DeductionTransactionByBarcode>();
     }
 }

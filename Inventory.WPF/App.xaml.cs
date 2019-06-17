@@ -66,7 +66,8 @@ namespace Inventory
             services.AddTransient<ViewProductsViewModel>();
             services.AddTransient<PurchaseTransactionViewModel>();
             services.AddTransient<ReturnTransactionViewModel>();
-            services.AddTransient<DeductionTransactionBase>();
+            services.AddTransient<DeductionTransaction>();
+            services.AddTransient<DeductionTransactionByBarcode>();
 
             _eagerSingletonList.Add(typeof(AddSupplierViewModel));
             _eagerSingletonList.Add(typeof(AddFootprintViewModel));

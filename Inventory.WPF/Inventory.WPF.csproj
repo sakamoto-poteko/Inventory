@@ -7,6 +7,8 @@
     <StartupObject>Inventory.App</StartupObject>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <ApplicationIcon>icon.ico</ApplicationIcon>
+    <Version>1.1.0</Version>
+    <Configurations>Debug;Release;NoUWP</Configurations>
   </PropertyGroup>
 
   <ItemGroup>
@@ -37,6 +39,7 @@
     <None Remove="Views\MarginResources.xaml" />
     <None Remove="Views\ShowInventories.xaml" />
     <None Remove="Views\TransactionDeduction.xaml" />
+    <None Remove="Views\TransactionDeductionByBarcode.xaml" />
     <None Remove="Views\TransactionPurchase.xaml" />
     <None Remove="Views\TransactionReturn.xaml" />
     <None Remove="Views\ViewFootprints.xaml" />

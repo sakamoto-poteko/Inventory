@@ -9,12 +9,12 @@ using System.Windows;
 
 namespace Inventory.ViewModels
 {
-    public class DeductionTransactionBase : TransactionBaseViewModel
+    public class DeductionTransaction : TransactionBaseViewModel
     {
         public static Guid MessageToken = Guid.NewGuid();
         public override Guid MsgToken => MessageToken;
 
-        public DeductionTransactionBase()
+        public DeductionTransaction()
         {
             TransactionType = EnumTransactionType.Retrieve;
         }
@@ -101,10 +101,10 @@ namespace Inventory.ViewModels
             if (SelectedInventory == null)
                 return false;
 
-            if (!IntQuantity.HasValue)
+            if (!IntQuantity.HasValue || IntQuantity == 0)
                 return false;
 
-            if (SelectedInventory.Quantity < IntQuantity)
+            if (SelectedInventory.Quantity < IntQuantity.Value)
                 return false;
 
             return true;

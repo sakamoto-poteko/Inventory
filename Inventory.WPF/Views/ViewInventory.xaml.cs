@@ -23,7 +23,7 @@ namespace Inventory.Views
         public ViewInventory()
         {
             InitializeComponent();
-            Messenger.Default.Register<WindowMessages>(this, DeductionTransactionBase.MessageToken,
+            Messenger.Default.Register<WindowMessages>(this, DeductionTransaction.MessageToken,
                 msg =>
                 {
                     if (msg == WindowMessages.CloseWindow)

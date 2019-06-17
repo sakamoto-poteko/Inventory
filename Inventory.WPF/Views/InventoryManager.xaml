@@ -70,11 +70,12 @@
                     </Setter>
                 </Style>
             </GroupBox.Resources>
-            <UniformGrid Columns="4">
+            <UniformGrid Columns="5">
                 <Button x:Name="BtnViewInventory" Content="View" Click="BtnViewInventory_Click" />
                 <Button x:Name="BtnPurchase" Content="Purchase&#x0a;(Inbound)" Click="BtnPurchase_Click"/>
                 <Button x:Name="BtnReturn" Content="Return&#x0a;(Inbound)" Click="BtnReturn_Click" />
                 <Button x:Name="BtnRetrieve" Content="Retrieve/Shrinkage&#x0a;(Outbound)" Click="BtnRetrieve_Click" />
+                <Button x:Name="BtnRetrieveBarcodeScanner" Content="Retrieve/Shrinkage&#x0a;(Outbound)&#x0a;(Barcode Scanner)" Click="BtnRetrieveBarcodeScanner_Click" />
             </UniformGrid>
         </GroupBox>
     </Grid>

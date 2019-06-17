@@ -15,4 +15,10 @@
         public View ViewToShow { get; set; }
         public object ViewModel { get; set; }
     }
+
+    public enum ChangeFocusMessage
+    {
+        FocusToSearch,
+        FocusToQuantity,
+    }
 }

@@ -93,5 +93,11 @@ namespace Inventory.Views
             var window = new ViewInventory();
             window.ShowDialog();
         }
+
+        private void BtnRetrieveBarcodeScanner_Click(object sender, RoutedEventArgs e)
+        {
+            var window = new WPF.Views.TransactionDeductionByBarcode();
+            window.ShowDialog();
+        }
     }
 }

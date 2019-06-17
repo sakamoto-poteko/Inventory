@@ -198,11 +198,11 @@ namespace Inventory.ViewModels
 
         private void SearchLocationNameKeyword()
         {
-            IQueryable<Location> locations = _context.Locations;
             if (!string.IsNullOrWhiteSpace(LocationNameKeyword))
-                locations = locations.Where(l =>
-                    EF.Functions.Like(l.LocationName, $"{WildcardToLike(LocationNameKeyword)}%"));
-            LocationList = new ObservableCollection<Location>(locations);
+            {
+                var locations = SearchLocationNameKeyword(_context, LocationNameKeyword);
+                LocationList = new ObservableCollection<Location>(locations);
+            }
         }
 
 
@@ -316,14 +316,6 @@ namespace Inventory.ViewModels
         protected override void ClearFields()
         {
             base.ClearFields();
-            SelectedSupplier = null;
-            SuppliersList = null;
-            CreateNewInventory = false;
-            LocationList = null;
-            LocationNameKeyword = null;
-            Price = "0";
-            ProductList = null;
-            ProductNameKeyword = null;
             SelectedLocation = null;
             SelectedProduct = null;
             NewUniqueId = null;

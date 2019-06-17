@@ -32,7 +32,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\DbInsertViewModelBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\DbQueryViewModelBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\DbViewModelBase.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\DeductionTransactionBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\DeductionTransaction.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\DeductionTransactionByBarcode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Messages.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\PurchaseTransactionViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ReturnTransactionViewModel.cs" />
