@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using Inventory.Framework;
 using Inventory.Models;
 using Microsoft.EntityFrameworkCore;
 #if !WINDOWS_UWP
@@ -82,8 +83,10 @@ namespace Inventory.ViewModels
                 }
                 catch (DbUpdateException e)
                 {
-                    MessageBox.Show($"An error has occured: {e.Message}\n{e.InnerException?.Message}", "Save failed", MessageBoxButton.OK,
-                        MessageBoxImage.Error);
+                    UniversalMessageBox.Show($"An error has occured: {e.Message}\n{e.InnerException?.Message}",
+                        "Save failed",
+                        UniversalMessageBox.MessageBoxButton.OK,
+                        UniversalMessageBox.MessageBoxImage.Error);
                     transaction.Rollback();
                     UndoingChangesDbContextLevel(_context);
                     return false;

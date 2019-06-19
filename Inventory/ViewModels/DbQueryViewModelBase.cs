@@ -37,8 +37,10 @@ namespace Inventory.ViewModels
                         err = "used by other records";
                     else
                         err = e.InnerException?.Message ?? e.Message;
-                    MessageBox.Show($"Unable to save: {err}", "Save failed", MessageBoxButton.OK,
-                        MessageBoxImage.Error);
+                    UniversalMessageBox.Show($"Unable to save: {err}",
+                        "Save failed",
+                        UniversalMessageBox.MessageBoxButton.OK,
+                        UniversalMessageBox.MessageBoxImage.Error);
                     return false;
                 }
 

@@ -286,8 +286,10 @@ namespace Inventory.ViewModels
                         err = "record already existed";
                     else
                         err = ex.InnerException?.Message ?? ex.Message;
-                    MessageBox.Show($"Unable to save: {err}", "Save failed", MessageBoxButton.OK,
-                        MessageBoxImage.Error);
+                    UniversalMessageBox.Show($"Unable to save: {err}",
+                        "Save failed",
+                        UniversalMessageBox.MessageBoxButton.OK,
+                        UniversalMessageBox.MessageBoxImage.Error);
                     transaction.Rollback();
                     UndoingChangesDbContextLevel(_context);
                     return false;
@@ -298,8 +300,10 @@ namespace Inventory.ViewModels
         protected override bool CheckData()
         {
             if (UintPrice == 0)
-                return MessageBox.Show("Price is 0, are you sure?", "Data check",
-                           MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes;
+                return UniversalMessageBox.Show("Price is 0, are you sure?", "Data check",
+                           UniversalMessageBox.MessageBoxButton.YesNo,
+                           UniversalMessageBox.MessageBoxImage.Warning) ==
+                       UniversalMessageBox.MessageBoxResult.Yes;
 
             return true;
         }

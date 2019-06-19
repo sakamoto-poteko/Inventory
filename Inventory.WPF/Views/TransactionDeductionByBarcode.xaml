@@ -5,9 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Inventory.WPF.Views"
         mc:Ignorable="d"
-        Title="TransactionDeductionByBarcode" Height="742" Width="1200"
+        Title="Retrieve/Shrinkage (Barcode)" Height="742" Width="1200"
         WindowStartupLocation="CenterScreen"
-        DataContext="{Binding DeductionTransactionByBarcodeViewModel, Source={StaticResource ViewModelLocator}}">
+        DataContext="{Binding DeductionTransactionByBarcodeViewModel, Source={StaticResource ViewModelLocator}}"
+        FocusManager.FocusedElement="{Binding ElementName=TbLocationKeyword}">
     <Grid Margin="5">
         <Grid.LayoutTransform>
             <ScaleTransform ScaleX="1.5" ScaleY="1.5" CenterX=".5" CenterY=".5" />

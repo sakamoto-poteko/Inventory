@@ -1,4 +1,5 @@
 ﻿using System;
+using Inventory.Framework;
 using Inventory.Models;
 #if !WINDOWS_UWP
 using System.Windows.Input;
@@ -21,7 +22,7 @@ namespace Inventory.ViewModels
             {
                 _name = value?.ToUpper();
                 RaisePropertyChanged();
-                CommandManager.InvalidateRequerySuggested();
+                UniversalCommandManager.InvalidateRequerySuggested();
             }
         }
 

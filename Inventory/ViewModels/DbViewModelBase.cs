@@ -45,9 +45,9 @@ namespace Inventory.ViewModels
         {
             if (ShouldPromptClose())
             {
-                var result = MessageBox.Show("Close without saving changes?", "Close", MessageBoxButton.YesNo,
-                    MessageBoxImage.Exclamation);
-                if (result == MessageBoxResult.No)
+                var result = UniversalMessageBox.Show("Close without saving changes?", "Close", UniversalMessageBox.MessageBoxButton.YesNo,
+                    UniversalMessageBox.MessageBoxImage.Exclamation);
+                if (result == UniversalMessageBox.MessageBoxResult.No)
                     return;
             }
             Messenger.Default.Send(WindowMessages.CloseWindow, MsgToken);

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Inventory.Framework;
 using Inventory.Models;
 using Microsoft.EntityFrameworkCore;
 #if !WINDOWS_UWP
@@ -105,10 +106,10 @@ namespace Inventory.ViewModels
 
         protected override bool PromptDelete()
         {
-            var result = MessageBox.Show(
+            var result = UniversalMessageBox.Show(
                 $"Are you sure to delete supplier ID {SelectedItem.Id}, Name {SelectedItem.Name}?",
-                "Delete", MessageBoxButton.YesNo, MessageBoxImage.Warning);
-            return result == MessageBoxResult.Yes;
+                "Delete", UniversalMessageBox.MessageBoxButton.YesNo, UniversalMessageBox.MessageBoxImage.Warning);
+            return result == UniversalMessageBox.MessageBoxResult.Yes;
         }
 
         protected override IEnumerable<object> GetSelectedItems()

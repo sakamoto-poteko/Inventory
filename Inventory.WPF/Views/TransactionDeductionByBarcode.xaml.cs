@@ -48,7 +48,16 @@ namespace Inventory.WPF.Views
 
         private void TbQuantity_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            e.Handled = !Globals.Instance.PositiveIntegerRegex.IsMatch(e.Text);
+            if (Globals.Instance.PositiveIntegerRegex.IsMatch(e.Text))
+            {
+                e.Handled = false;
+            }
+            else
+            {
+                e.Handled = false;
+                TbLocationKeyword.Text = string.Empty;
+                TbLocationKeyword.Focus();
+            }
         }
     }
 }

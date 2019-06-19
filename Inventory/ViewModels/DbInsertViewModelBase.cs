@@ -40,8 +40,8 @@ namespace Inventory.ViewModels
                     err = "record already existed";
                 else
                     err = e.InnerException?.Message ?? e.Message;
-                MessageBox.Show($"Unable to save: {err}", "Save failed", MessageBoxButton.OK,
-                    MessageBoxImage.Error);
+                UniversalMessageBox.Show($"Unable to save: {err}", "Save failed", UniversalMessageBox.MessageBoxButton.OK,
+                    UniversalMessageBox.MessageBoxImage.Error);
                 return false;
             }
             return true;
