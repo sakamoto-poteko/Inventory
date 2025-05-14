@@ -5,116 +5,47 @@ using System.Linq;
 using Inventory.Framework;
 using Inventory.Models;
 using Microsoft.EntityFrameworkCore;
-#if !WINDOWS_UWP
-using System.Windows.Input;
-using System.Windows;
-#endif
+using CommunityToolkit.Mvvm.Messaging;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+
 
 namespace Inventory.ViewModels
 {
-    public class ViewLocationsViewModel : DbQueryViewModelBase
+    public partial class ViewLocationsViewModel : DbQueryViewModelBase
     {
         public static Guid MessageToken = Guid.NewGuid();
         public override Guid MsgToken => MessageToken;
 
-        private string _locationNameKeyword;
-
-        public string LocationNameKeyword
-        {
-            get => _locationNameKeyword;
-            set
-            {
-                _locationNameKeyword = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private bool _locationNameKeywordEnabled = true;
-
-        public bool LocationNameKeywordEnabled
-        {
-            get => _locationNameKeywordEnabled;
-            set
-            {
-                _locationNameKeywordEnabled = value;
-                RaisePropertyChanged();
-            }
-        }
+        [ObservableProperty]
+        private string locationNameKeyword;
 
 
+        [ObservableProperty]
+        private bool locationNameKeywordEnabled = true;
+
+
+        [ObservableProperty]
         private string _locationUnitKeyword;
 
-        public string LocationUnitKeyword
-        {
-            get => _locationUnitKeyword;
-            set
-            {
-                _locationUnitKeyword = value;
-                RaisePropertyChanged();
-            }
-        }
+        [ObservableProperty]
+        private bool locationUnitKeywordEnabled;
 
-        private bool _locationUnitKeywordEnabled;
+        [ObservableProperty]
+        private string commentsKeyword;
 
-        public bool LocationUnitKeywordEnabled
-        {
-            get => _locationUnitKeywordEnabled;
-            set
-            {
-                _locationUnitKeywordEnabled = value;
-                RaisePropertyChanged();
-            }
-        }
+        [ObservableProperty]
+        private bool commentsKeywordEnabled;
 
-        private string _commentsKeyword;
+        [ObservableProperty]
+        private ObservableCollection<Location> locations;
 
-        public string CommentsKeyword
-        {
-            get => _commentsKeyword;
-            set
-            {
-                _commentsKeyword = value;
-                RaisePropertyChanged();
-            }
-        }
+        [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(ViewInventoriesCommand))]
+        [NotifyCanExecuteChangedFor(nameof(DeleteCommand))]
+        private Location selectedLocation;
 
-        private bool _commentsKeywordEnabled;
-
-        public bool CommentsKeywordEnabled
-        {
-            get => _commentsKeywordEnabled;
-            set
-            {
-                _commentsKeywordEnabled = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private ObservableCollection<Location> _locations;
-
-        public ObservableCollection<Location> Locations
-        {
-            get => _locations;
-            set
-            {
-                _locations = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private Location _selectedLocation;
-
-        public Location SelectedLocation
-        {
-            get => _selectedLocation;
-            set
-            {
-                _selectedLocation = value;
-                RaisePropertyChanged();
-                CommandManager.InvalidateRequerySuggested();
-            }
-        }
-
+        [RelayCommand(CanExecute = nameof(CanViewInventories))]
         private void ViewInventories()
         {
             var context = VanillaInventoryContext;
@@ -122,19 +53,18 @@ namespace Inventory.ViewModels
                 .Include(i => i.Product)
                 .ThenInclude(p => p.Footprint)
                 .Where(i => i.LocationId == SelectedLocation.LocationId).ToList();
-            MessengerInstance.Send(new ShowViewMessage
+            WeakReferenceMessenger.Default.Send(new ShowViewMessage
             {
                 ViewModel = inventories,
-                ViewToShow = ShowViewMessage.View.InventoryList
-            }, MsgToken);
+                ViewToShow = ShowViewMessage.View.InventoryList,
+                MessageToken = MsgToken,
+            });
         }
 
         private bool CanViewInventories()
         {
             return SelectedLocation != null;
         }
-
-        public RelayCommand CommandViewInventories => new RelayCommand(ViewInventories, CanViewInventories);
 
         protected override bool ShouldPromptClose()
         {

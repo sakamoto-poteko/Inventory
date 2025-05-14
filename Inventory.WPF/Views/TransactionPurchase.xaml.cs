@@ -1,17 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
+﻿using System.Windows;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using GalaSoft.MvvmLight.Messaging;
+
 using Inventory.ViewModels;
+using Inventory.WPF.Utils;
 
 namespace Inventory.Views
 {
@@ -20,15 +11,12 @@ namespace Inventory.Views
     /// </summary>
     public partial class TransactionPurchase : Window
     {
+        private readonly CloseWindowMessageHandler _closeWindowMessageHandler;
+
         public TransactionPurchase()
         {
             InitializeComponent();
-            Messenger.Default.Register<WindowMessages>(this, PurchaseTransactionViewModel.MessageToken,
-                msg =>
-                {
-                    if (msg == WindowMessages.CloseWindow)
-                        Close();
-                });
+            _closeWindowMessageHandler = new CloseWindowMessageHandler(this, PurchaseTransactionViewModel.MessageToken);
         }
 
         private void TbPrice_PreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -40,5 +28,6 @@ namespace Inventory.Views
         {
             e.Handled = !Globals.Instance.PositiveIntegerRegex.IsMatch(e.Text);
         }
+
     }
 }

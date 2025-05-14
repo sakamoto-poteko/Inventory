@@ -35,9 +35,9 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <Button Content="Insert &amp; _New" Grid.Column="0" IsDefault="True" Command="{Binding CommandInsertNext}" />
-                    <Button Content="Insert &amp; _Close" Grid.Column="1" Command="{Binding CommandInsertClose}"/>
-                    <Button Content="Close (_x)" Grid.Column="2" IsCancel="True" Command="{Binding CommandClose}" />
+                    <Button Content="Insert &amp; _New" Grid.Column="0" IsDefault="True" Command="{Binding InsertNextCommand}" />
+                    <Button Content="Insert &amp; _Close" Grid.Column="1" Command="{Binding InsertCloseCommand}"/>
+                    <Button Content="Close (_x)" Grid.Column="2" IsCancel="True" Command="{Binding CloseCommand}" />
                 </Grid>
             </Grid>
         </Border>
@@ -77,13 +77,13 @@
                          Margin="0,0,5,5" VerticalAlignment="Center" VerticalContentAlignment="Center" 
                          Text="{Binding InventoryKeyword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                     <TextBox.InputBindings>
-                        <KeyBinding Key="Return" Command="{Binding CommandSearchInventory}" />
+                        <KeyBinding Key="Return" Command="{Binding SearchInventoryKeywordCommand}" />
                     </TextBox.InputBindings>
                 </TextBox>
                 <Button Grid.Row="0" Grid.Column="2" IsDefault="{Binding IsFocused, ElementName=TbInventoryKeyword}" 
                          VerticalAlignment="Stretch" Margin="0,0,0,5"
                             FontFamily="Segoe MDL2 Assets" Content="&#xE11A;" Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}"
-                            Command="{Binding CommandSearchInventory}" />
+                            Command="{Binding SearchInventoryKeywordCommand}" />
 
                 <ListView Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" 
                       ItemsSource="{Binding InventoriesList}" SelectedValue="{Binding SelectedInventory}">
@@ -155,9 +155,9 @@
                 BorderThickness="{TemplateBinding BorderThickness}"
                 DataContext="{TemplateBinding DataContext}">
             <UniformGrid Columns="3" Rows="1">
-                <Button Margin="0,5,5,5" Content="Insert &amp; _New" Command="{Binding CommandInsertNext}" IsDefault="{Binding IsKeyboardFocusWithin, ElementName=GbPurchaseInfo}"/>
-                <Button Margin="5" Content="Insert &amp; _Close" Command="{Binding CommandInsertClose}" />
-                <Button Margin="5,5,0,5" Content="Close (_x)" Command="{Binding CommandClose}" IsCancel="True"/>
+                <Button Margin="0,5,5,5" Content="Insert &amp; _New" Command="{Binding ExecuteNextCommand}" IsDefault="{Binding IsKeyboardFocusWithin, ElementName=GbInventoryChangeInfo}"/>
+                <Button Margin="5" Content="Insert &amp; _Close" Command="{Binding ExecuteCloseCommand}" />
+                <Button Margin="5,5,0,5" Content="Close (_x)" Command="{Binding CloseCommand}" IsCancel="True"/>
             </UniformGrid>
         </Border>
     </ControlTemplate>

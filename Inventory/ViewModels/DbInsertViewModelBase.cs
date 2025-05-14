@@ -1,15 +1,13 @@
-﻿using GalaSoft.MvvmLight.Messaging;
-using Inventory.Framework;
+﻿using Inventory.Framework;
 using Microsoft.EntityFrameworkCore;
-#if !WINDOWS_UWP
-using System.Windows.Input;
-using System.Windows;
-#endif
+using CommunityToolkit.Mvvm.Messaging;
+using CommunityToolkit.Mvvm.Input;
 
 namespace Inventory.ViewModels
 {
-    public abstract class DbInsertViewModelBase : DbViewModelBase
+    public abstract partial class DbInsertViewModelBase : DbViewModelBase
     {
+        [RelayCommand(CanExecute = nameof(CanInsert))]
         protected virtual void InsertNext()
         {
             if (Insert())
@@ -47,16 +45,14 @@ namespace Inventory.ViewModels
             return true;
         }
 
+        [RelayCommand(CanExecute = nameof(CanInsert))]
         protected virtual void InsertClose()
         {
             if (Insert())
             {
-                Messenger.Default.Send(WindowMessages.CloseWindow, MsgToken);
+                WeakReferenceMessenger.Default.Send(new WindowMessage { MessageToken = MsgToken, MessageType = WindowMessage.Type.CloseWindow });
                 ClearFields();
             }
         }
-        
-        public RelayCommand CommandInsertNext => new RelayCommand(InsertNext, CanInsert);
-        public RelayCommand CommandInsertClose => new RelayCommand(InsertClose, CanInsert);
     }
 }

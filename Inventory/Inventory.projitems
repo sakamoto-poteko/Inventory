@@ -11,10 +11,10 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\CommonValueConveter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\InvertedBoolConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)extensions\UppercaseConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\ValueConverterGroup.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Framework\UniversalCommandManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Framework\UniversalMessageBox.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Framework\RelayCommand.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Globals.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)InventoryContext.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Migrations\20190611161708_V1Schema.cs" />

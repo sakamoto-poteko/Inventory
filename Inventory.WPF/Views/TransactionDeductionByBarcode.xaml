@@ -35,13 +35,13 @@
                          Margin="0,0,5,5" VerticalAlignment="Center" VerticalContentAlignment="Center" 
                          Text="{Binding LocationKeyword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                 <TextBox.InputBindings>
-                    <KeyBinding Key="Return" Command="{Binding CommandSearchByLocation}" />
+                    <KeyBinding Key="Return" Command="{Binding SearchInventoryByLocationCommand}" />
                 </TextBox.InputBindings>
             </TextBox>
-            <Button Grid.Row="0" Grid.Column="2" IsDefault="{Binding IsFocused, ElementName=TbInventoryKeyword}" 
+            <Button Grid.Row="0" Grid.Column="2"
                          VerticalAlignment="Stretch" Margin="0,0,0,5"
                             FontFamily="Segoe MDL2 Assets" Content="&#xE11A;" Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}"
-                            Command="{Binding CommandSearchByLocation}" />
+                            Command="{Binding SearchInventoryByLocationCommand}" />
 
             <ListView Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" 
                       ItemsSource="{Binding InventoriesList}" SelectedValue="{Binding SelectedInventory}">
@@ -89,7 +89,7 @@
                 <TextBox Grid.Row="1" Grid.Column="3" IsTabStop="False" Text="{Binding InventoryQuantity, Mode=OneWay}" />
             </Grid>
         </Grid>
-        <GroupBox Grid.Row="1" Header="Deduction Info">
+        <GroupBox Grid.Row="1" x:Name="GbInventoryChangeInfo" Header="Deduction Info">
             <Grid Margin="0,5,0,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto" />

@@ -1,17 +1,16 @@
 ﻿using System.Collections.Generic;
 using Inventory.Framework;
 using Microsoft.EntityFrameworkCore;
+using CommunityToolkit.Mvvm.Input;
+
 #if !WINDOWS_UWP
-using System.Windows.Input;
-using System.Windows;
 #endif
 
 namespace Inventory.ViewModels
 {
-    public abstract class DbQueryViewModelBase : DbViewModelBase
+    public abstract partial class DbQueryViewModelBase : DbViewModelBase
     {
-        public RelayCommand CommandSearch => new RelayCommand(SearchKeyword);
-        public RelayCommand CommandDelete => new RelayCommand(Delete, CanDelete);
+        [RelayCommand]
         protected abstract void SearchKeyword();
         protected abstract bool PromptDelete();
         protected abstract IEnumerable<object> GetSelectedItems();
@@ -51,6 +50,7 @@ namespace Inventory.ViewModels
             return true;
         }
 
+        [RelayCommand(CanExecute = nameof(CanDelete))]
         protected virtual void Delete()
         {
             if (PromptDelete())

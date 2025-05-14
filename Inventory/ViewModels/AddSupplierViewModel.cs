@@ -1,39 +1,21 @@
 ﻿using System;
 using Inventory.Models;
-#if !WINDOWS_UWP
-using System.Windows.Input;
-using System.Windows;
-#endif
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace Inventory.ViewModels
 {
-    public class AddSupplierViewModel : DbInsertViewModelBase
+    public partial class AddSupplierViewModel : DbInsertViewModelBase
     {
         public static readonly Guid MessageToken = Guid.NewGuid();
 
-        private string _name;
-        private string _comments;
 
-        public string Name
-        {
-            get => _name;
-            set
-            {
-                _name = value;
-                RaisePropertyChanged();
-                CommandManager.InvalidateRequerySuggested();
-            }
-        }
+        [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(InsertNextCommand))]
+        [NotifyCanExecuteChangedFor(nameof(InsertCloseCommand))]
+        private string name;
 
-        public string Comments
-        {
-            get => _comments;
-            set
-            {
-                _comments = value;
-                RaisePropertyChanged();
-            }
-        }
+        [ObservableProperty]
+        private string comments;
 
         protected override object ConvertToEntity()
         {

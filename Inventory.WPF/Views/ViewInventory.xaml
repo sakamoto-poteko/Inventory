@@ -9,7 +9,7 @@
         WindowStartupLocation="CenterScreen"
         DataContext="{Binding DeductionTransactionViewModel, Source={StaticResource ViewModelLocator}}">
     <Window.InputBindings>
-        <KeyBinding Key="Esc" Command="{Binding CommandClose}" />
+        <KeyBinding Key="Esc" Command="{Binding CloseCommand}" />
     </Window.InputBindings>
     <Grid Margin="5">
         <Grid.RowDefinitions>

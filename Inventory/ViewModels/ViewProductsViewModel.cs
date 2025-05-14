@@ -5,129 +5,48 @@ using System.Linq;
 using Inventory.Framework;
 using Inventory.Models;
 using Microsoft.EntityFrameworkCore;
+using CommunityToolkit.Mvvm.ComponentModel;
+
 #if !WINDOWS_UWP
-using System.Windows.Input;
-using System.Windows;
 #endif
 
 namespace Inventory.ViewModels
 {
-    public class ViewProductsViewModel : DbQueryViewModelBase
+    public partial class ViewProductsViewModel : DbQueryViewModelBase
     {
         public static Guid MessageToken = Guid.NewGuid();
-        private string _productNameKeyword;
-        private bool _productNameKeywordEnabled = true;
-        private string _productCommentsKeyword;
-        private bool _productCommentsKeywordEnabled;
-        private string _productManufacturerKeyword;
-        private bool _productManufacturerKeywordEnabled;
-        private string _productFootprintKeyword;
-        private bool _productFootprintKeywordEnabled;
         public override Guid MsgToken => MessageToken;
 
-        public string ProductNameKeyword
-        {
-            get => _productNameKeyword;
-            set
-            {
-                _productNameKeyword = value;
-                RaisePropertyChanged();
-            }
-        }
+        [ObservableProperty]
+        private string productNameKeyword;
 
-        public bool ProductNameKeywordEnabled
-        {
-            get => _productNameKeywordEnabled;
-            set
-            {
-                _productNameKeywordEnabled = value;
-                RaisePropertyChanged();
-            }
-        }
+        [ObservableProperty]
+        private bool productNameKeywordEnabled = true;
 
-        public string ProductCommentsKeyword
-        {
-            get => _productCommentsKeyword;
-            set
-            {
-                _productCommentsKeyword = value;
-                RaisePropertyChanged();
-            }
-        }
+        [ObservableProperty]
+        private string productCommentsKeyword;
 
-        public bool ProductCommentsKeywordEnabled
-        {
-            get => _productCommentsKeywordEnabled;
-            set
-            {
-                _productCommentsKeywordEnabled = value;
-                RaisePropertyChanged();
-            }
-        }
+        [ObservableProperty]
+        private bool productCommentsKeywordEnabled;
 
-        public string ProductManufacturerKeyword
-        {
-            get => _productManufacturerKeyword;
-            set
-            {
-                _productManufacturerKeyword = value;
-                RaisePropertyChanged();
-            }
-        }
+        [ObservableProperty]
+        private string productManufacturerKeyword;
 
-        public bool ProductManufacturerKeywordEnabled
-        {
-            get => _productManufacturerKeywordEnabled;
-            set
-            {
-                _productManufacturerKeywordEnabled = value;
-                RaisePropertyChanged();
-            }
-        }
+        [ObservableProperty]
+        private bool productManufacturerKeywordEnabled;
 
-        public string ProductFootprintKeyword
-        {
-            get => _productFootprintKeyword;
-            set
-            {
-                _productFootprintKeyword = value.ToUpper();
-                RaisePropertyChanged();
-            }
-        }
+        [ObservableProperty]
+        private string productFootprintKeyword;
 
-        public bool ProductFootprintKeywordEnabled
-        {
-            get => _productFootprintKeywordEnabled;
-            set
-            {
-                _productFootprintKeywordEnabled = value;
-                RaisePropertyChanged();
-            }
-        }
+        [ObservableProperty]
+        private bool productFootprintKeywordEnabled;
+        
+        [ObservableProperty]
+        private ObservableCollection<Product> products;
 
-        private ObservableCollection<Product> _products;
-
-        public ObservableCollection<Product> Products
-        {
-            get => _products;
-            set
-            {
-                _products = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private Product _selectedProduct;
-
-        public Product SelectedProduct
-        {
-            get => _selectedProduct;
-            set
-            {
-                _selectedProduct = value;
-                RaisePropertyChanged();
-            }
-        }
+        [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(DeleteCommand))]
+        private Product selectedProduct;
 
 
         protected override bool ShouldPromptClose()

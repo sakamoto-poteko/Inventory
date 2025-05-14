@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using Inventory.Framework;
 using Inventory.Models;
-#if !WINDOWS_UWP
-using System.Windows.Input;
-using System.Windows;
-#endif
+using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace Inventory.ViewModels
 {
-    public class AddProductViewModel : DbInsertViewModelBase
+    public partial class AddProductViewModel : DbInsertViewModelBase
     {
         public AddProductViewModel()
         {
@@ -20,62 +17,33 @@ namespace Inventory.ViewModels
         public static Guid MessageToken = Guid.NewGuid();
         public override Guid MsgToken => MessageToken;
 
-        private string _productName;
+        [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(NewFootprintCommand))]
+        [NotifyCanExecuteChangedFor(nameof(InsertCloseCommand))]
+        [NotifyCanExecuteChangedFor(nameof(InsertNextCommand))]
+        private string productName;
 
-        public string ProductName
-        {
-            get => _productName;
-            set
-            {
-                _productName = value;
-                RaisePropertyChanged();
-                CommandManager.InvalidateRequerySuggested();
-            }
-        }
+        [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(InsertCloseCommand))]
+        [NotifyCanExecuteChangedFor(nameof(InsertNextCommand))]
+        private string manufacturer;
 
-        private string _manufacturer;
+        [ObservableProperty]
+        private string comments;
 
-        public string Manufacturer
-        {
-            get => _manufacturer;
-            set
-            {
-                _manufacturer = value;
-                RaisePropertyChanged();
-            }
-        }
+        [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(NewFootprintCommand))]
+        [NotifyCanExecuteChangedFor(nameof(InsertCloseCommand))]
+        [NotifyCanExecuteChangedFor(nameof(InsertNextCommand))]
+        private bool haveFootprint = true;
 
-        private string _comments;
+        [ObservableProperty]
+        private ObservableCollection<Footprint> footprints;
 
-        public string Comments
-        {
-            get => _comments;
-            set
-            {
-                _comments = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        public ObservableCollection<Footprint> Footprints
-        {
-            get => _footprints;
-            private set
-            {
-                _footprints = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        public int SelectedFootprintId
-        {
-            get => _selectedFootprintId;
-            set
-            {
-                _selectedFootprintId = value;
-                RaisePropertyChanged();
-            }
-        }
+        [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(InsertCloseCommand))]
+        [NotifyCanExecuteChangedFor(nameof(InsertNextCommand))]
+        private int selectedFootprintId = -1;
 
         private void PopulateFootprints()
         {
@@ -85,29 +53,13 @@ namespace Inventory.ViewModels
             SelectedFootprintId = oldId;
         }
 
+        [RelayCommand]
         private void NewFootprint()
         {
             var window = new Views.AddFootprint();
             window.ShowDialog();
             PopulateFootprints();
         }
-
-        private bool _haveFootprint = true;
-        private ObservableCollection<Footprint> _footprints;
-        private int _selectedFootprintId = -1;
-
-        public bool HaveFootprint
-        {
-            get => _haveFootprint;
-            set
-            {
-                _haveFootprint = value;
-                RaisePropertyChanged();
-                CommandManager.InvalidateRequerySuggested();
-            }
-        }
-
-        public RelayCommand CommandNewFootprint => new RelayCommand(NewFootprint);
 
         protected override void ClearFields()
         {
@@ -118,7 +70,7 @@ namespace Inventory.ViewModels
 
         protected override bool CanInsert()
         {
-            if (HaveFootprint && SelectedFootprintId == -1)
+            if (HaveFootprint && SelectedFootprintId == -1 && !string.IsNullOrWhiteSpace(Manufacturer))
                 return false;
             return !string.IsNullOrWhiteSpace(ProductName);
         }

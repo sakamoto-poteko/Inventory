@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-#if !WINDOWS_UWP
+﻿#if !WINDOWS_UWP
 using System.Windows.Input;
 #endif
 

@@ -2,17 +2,15 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using Inventory.Framework;
 using Inventory.Models;
 using Microsoft.EntityFrameworkCore;
-#if !WINDOWS_UWP
+using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.ComponentModel;
 using System.Windows.Input;
-using System.Windows;
-#endif
 
 namespace Inventory.ViewModels
 {
-    public abstract class TransactionBaseViewModel : DbViewModelBase
+    public abstract partial class TransactionBaseViewModel : DbViewModelBase
     {
         public enum EnumTransactionType
         {
@@ -24,16 +22,20 @@ namespace Inventory.ViewModels
 
         protected readonly InventoryContext _context;
 
-        private string _comments;
+        [ObservableProperty]
+        private string comments;
 
-        private ObservableCollection<Models.Inventory> _inventoriesList;
-        private string _inventoryKeyword;
+        [ObservableProperty]
+        private ObservableCollection<Models.Inventory> inventoriesList;
+        
+        [ObservableProperty]
+        private string inventoryKeyword;
 
         protected int? IntQuantity
         {
             get
             {
-                if (int.TryParse(_quantity, out var val))
+                if (int.TryParse(Quantity, out var val))
                 {
                     return val;
                 }
@@ -43,13 +45,17 @@ namespace Inventory.ViewModels
                 }
             }
         }
-        private string _quantity;
+        
+        [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(ExecuteCloseCommand))]
+        [NotifyCanExecuteChangedFor(nameof(ExecuteNextCommand))]
+        private string quantity;
 
-        private Models.Inventory _selectedInventory;
+        [ObservableProperty]
+        private string supplierKeyword;
 
-        private string _supplierKeyword;
-
-        private DateTime _transactionTime = DateTime.Now;
+        [ObservableProperty]
+        private DateTime transactionTime = DateTime.Now;
 
         protected TransactionBaseViewModel()
         {
@@ -65,89 +71,25 @@ namespace Inventory.ViewModels
         public Product InventoryProduct => SelectedInventory?.Product;
         public int? InventoryQuantity => SelectedInventory?.Quantity;
 
+        private Models.Inventory _selectedInventory;
         public Models.Inventory SelectedInventory
         {
             get => _selectedInventory;
             set
             {
-                _selectedInventory = value;
+                SetProperty(ref _selectedInventory, value);
 
-                RaisePropertyChanged();
-                RaisePropertyChanged(nameof(InventoryComments));
-                RaisePropertyChanged(nameof(InventoryLocation));
-                RaisePropertyChanged(nameof(InventoryProduct));
-                RaisePropertyChanged(nameof(InventoryQuantity));
+                OnPropertyChanged(nameof(InventoryComments));
+                OnPropertyChanged(nameof(InventoryLocation));
+                OnPropertyChanged(nameof(InventoryProduct));
+                OnPropertyChanged(nameof(InventoryQuantity));
 
-                CommandManager.InvalidateRequerySuggested();
-            }
-        }
-
-        public ObservableCollection<Models.Inventory> InventoriesList
-        {
-            get => _inventoriesList;
-            protected set
-            {
-                _inventoriesList = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        public string SupplierKeyword
-        {
-            get => _supplierKeyword;
-            set
-            {
-                _supplierKeyword = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        public string InventoryKeyword
-        {
-            get => _inventoryKeyword;
-            set
-            {
-                _inventoryKeyword = value;
-                RaisePropertyChanged();
+                ExecuteCloseCommand.NotifyCanExecuteChanged();
+                ExecuteNextCommand.NotifyCanExecuteChanged();
             }
         }
 
         public string InventoryKeywordHint => "Product name or inventory unique ID";
-
-        public string Quantity
-        {
-            get => _quantity;
-            set
-            {
-                _quantity = value;
-                RaisePropertyChanged();
-            }
-        }
-
-
-        public DateTime TransactionTime
-        {
-            get => _transactionTime;
-            set
-            {
-                _transactionTime = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        public string Comments
-        {
-            get => _comments;
-            set
-            {
-                _comments = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        public RelayCommand CommandInsertNext => new RelayCommand(ExecuteNext, CanInsert);
-        public RelayCommand CommandInsertClose => new RelayCommand(ExecuteClose, CanInsert);
-        public RelayCommand CommandSearchInventory => new RelayCommand(SearchInventoryKeyword);
 
         protected void TransactionViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
@@ -162,6 +104,7 @@ namespace Inventory.ViewModels
             }
         }
 
+        [RelayCommand]
         protected void SearchInventoryKeyword()
         {
             IQueryable<Models.Inventory> list = _context.Inventories
@@ -188,7 +131,8 @@ namespace Inventory.ViewModels
 
         protected abstract bool CanInsert();
 
-        protected virtual void ExecuteNext()
+        [RelayCommand(CanExecute = nameof(CanInsert))]
+        protected virtual void ExecuteNextDefault()
         {
             if (!CheckData())
                 return;
@@ -197,6 +141,9 @@ namespace Inventory.ViewModels
                 ClearFields();
         }
 
+        public virtual IRelayCommand ExecuteNextCommand => ExecuteNextDefaultCommand;
+
+        [RelayCommand]
         protected virtual void ClearFields()
         {
             Comments = null;
@@ -206,16 +153,20 @@ namespace Inventory.ViewModels
             SelectedInventory = null;
             SupplierKeyword = null;
             TransactionTime = DateTime.Now;
+            CommandManager.InvalidateRequerySuggested();
         }
 
-        protected virtual void ExecuteClose()
+        [RelayCommand(CanExecute = nameof(CanInsert))]
+        protected virtual void ExecuteCloseDefault()
         {
             if (!CheckData())
                 return;
 
             if (Execute())
-                CommandClose.Execute(null);
+                CloseCommand.Execute(null);
         }
+
+        public virtual IRelayCommand ExecuteCloseCommand => ExecuteNextDefaultCommand;
 
         protected IQueryable<Location> SearchLocationNameKeyword(InventoryContext context, string keyword)
         {

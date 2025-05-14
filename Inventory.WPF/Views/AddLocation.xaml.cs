@@ -1,17 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using GalaSoft.MvvmLight.Messaging;
+
 using Inventory.ViewModels;
+using Inventory.WPF.Utils;
 
 namespace Inventory.Views
 {
@@ -20,15 +12,12 @@ namespace Inventory.Views
     /// </summary>
     public partial class AddLocation : Window
     {
+        private readonly CloseWindowMessageHandler _closeWindowMessageHandler;
+
         public AddLocation()
         {
             InitializeComponent();
-            Messenger.Default.Register<WindowMessages>(this, AddLocationViewModel.MessageToken,
-                msg =>
-                {
-                    if (msg == WindowMessages.CloseWindow)
-                        Close();
-                });
+            _closeWindowMessageHandler = new CloseWindowMessageHandler(this, AddLocationViewModel.MessageToken);
         }
 
         private readonly Regex _positiveNumberRegex =
@@ -54,5 +43,6 @@ namespace Inventory.Views
                 e.CancelCommand();
             }
         }
+
     }
 }

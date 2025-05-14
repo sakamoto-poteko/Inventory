@@ -2,67 +2,32 @@
 using Inventory.Framework;
 using Inventory.Models;
 using Microsoft.EntityFrameworkCore;
-#if !WINDOWS_UWP
 using System.Windows.Input;
-using System.Windows;
-#endif
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace Inventory.ViewModels
 {
-    public class AddLocationViewModel : DbInsertViewModelBase
+    public partial class AddLocationViewModel : DbInsertViewModelBase
     {
         public static Guid MessageToken = Guid.NewGuid();
         public override Guid MsgToken => MessageToken;
 
-        private string _locationName;
+        [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(InsertNextCommand))]
+        [NotifyCanExecuteChangedFor(nameof(InsertCloseCommand))]
+        private string locationName;
 
-        public string LocationName
-        {
-            get => _locationName;
-            set
-            {
-                _locationName = value;
-                RaisePropertyChanged();
-                CommandManager.InvalidateRequerySuggested();
-            }
-        }
+        [ObservableProperty]
+        private string locationUnit;
 
-        private string _locationUnit;
+        [ObservableProperty]
+        private string comments;
 
-        public string LocationUnit
-        {
-            get => _locationUnit;
-            set
-            {
-                _locationUnit = value;
-                RaisePropertyChanged();
-            }
-        }
 
-        private string _comments;
-
-        public string Comments
-        {
-            get => _comments;
-            set
-            {
-                _comments = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private bool _isSeries;
-
-        public bool IsSeries
-        {
-            get => _isSeries;
-            set
-            {
-                _isSeries = value;
-                RaisePropertyChanged();
-                CommandManager.InvalidateRequerySuggested();
-            }
-        }
+        [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(InsertNextCommand))]
+        [NotifyCanExecuteChangedFor(nameof(InsertCloseCommand))]
+        private bool isSeries;
 
         private int _seriesBegin;
 
@@ -71,10 +36,11 @@ namespace Inventory.ViewModels
             get => _seriesBegin.ToString();
             set
             {
-                if (!int.TryParse(value, out _seriesBegin))
-                    _seriesBegin = 0;
+                if (!int.TryParse(value, out var seriesBegin))
+                    SetProperty(ref _seriesBegin, 0);
+                else
+                    SetProperty(ref _seriesBegin, seriesBegin);
 
-                RaisePropertyChanged();
                 CommandManager.InvalidateRequerySuggested();
             }
         }
@@ -86,9 +52,11 @@ namespace Inventory.ViewModels
             get => _seriesEnd.ToString();
             set
             {
-                if (!int.TryParse(value, out _seriesEnd))
-                    _seriesEnd = 0;
-                RaisePropertyChanged();
+                if (!int.TryParse(value, out var seriesEnd))
+                    SetProperty(ref _seriesEnd, 0);
+                else
+                    SetProperty(ref _seriesEnd, seriesEnd);
+
                 CommandManager.InvalidateRequerySuggested();
             }
         }

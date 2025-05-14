@@ -1,43 +1,24 @@
 ﻿using System;
-using Inventory.Framework;
 using Inventory.Models;
+using CommunityToolkit.Mvvm.ComponentModel;
+
 #if !WINDOWS_UWP
-using System.Windows.Input;
-using System.Windows;
 #endif
 
 namespace Inventory.ViewModels
 {
-    public class AddFootprintViewModel : DbInsertViewModelBase
+    public partial class AddFootprintViewModel : DbInsertViewModelBase
     {
         public static Guid MessageToken = Guid.NewGuid();
         public override Guid MsgToken => MessageToken;
 
-        private string _name;
+        [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(InsertNextCommand))]
+        [NotifyCanExecuteChangedFor(nameof(InsertCloseCommand))]
+        private string name;
 
-        public string Name
-        {
-            get => _name;
-            set
-            {
-                _name = value?.ToUpper();
-                RaisePropertyChanged();
-                UniversalCommandManager.InvalidateRequerySuggested();
-            }
-        }
-
-        private string _comments;
-
-        public string Comments
-        {
-            get => _comments;
-            set
-            {
-                _comments = value;
-                RaisePropertyChanged();
-            }
-        }
-
+        [ObservableProperty]
+        private string comments;
 
         protected override void ClearFields()
         {
@@ -54,7 +35,7 @@ namespace Inventory.ViewModels
         {
             return new Footprint
             {
-                FootprintName = Name,
+                FootprintName = Name.ToUpper(),
                 Comments = Comments
             };
         }

@@ -5,89 +5,37 @@ using System.Linq;
 using Inventory.Framework;
 using Inventory.Models;
 using Microsoft.EntityFrameworkCore;
+using CommunityToolkit.Mvvm.ComponentModel;
+
 #if !WINDOWS_UWP
-using System.Windows.Input;
-using System.Windows;
 #endif
 
 namespace Inventory.ViewModels
 {
-    public class ViewFootprintsViewModel : DbQueryViewModelBase
+    public partial class ViewFootprintsViewModel : DbQueryViewModelBase
     {
         public static Guid MessageToken = Guid.NewGuid();
         public override Guid MsgToken => MessageToken;
 
-        private string _footprintNameKeyword;
+        [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(SearchKeywordCommand))]
+        private string footprintNameKeyword;
 
-        public string FootprintNameKeyword
-        {
-            get => _footprintNameKeyword;
-            set
-            {
-                _footprintNameKeyword = value;
-                RaisePropertyChanged();
-                CommandManager.InvalidateRequerySuggested();
-            }
-        }
+        [ObservableProperty]
+        private bool footprintNameKeywordEnabled = true;
 
-        private bool _footprintNameKeywordEnabled = true;
+        [ObservableProperty]
+        private string footprintCommentKeyword;
 
-        public bool FootprintNameKeywordEnabled
-        {
-            get => _footprintNameKeywordEnabled;
-            set
-            {
-                _footprintNameKeywordEnabled = value;
-                RaisePropertyChanged();
-            }
-        }
+        [ObservableProperty]
+        private bool footprintCommentKeywordEnabled;
 
-        private string _footprintCommentKeyword;
+        [ObservableProperty]
+        private ObservableCollection<Footprint> footprints;
 
-        public string FootprintCommentKeyword
-        {
-            get => _footprintCommentKeyword;
-            set
-            {
-                _footprintCommentKeyword = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private bool _footprintCommentKeywordEnabled;
-
-        public bool FootprintCommentKeywordEnabled
-        {
-            get => _footprintCommentKeywordEnabled;
-            set
-            {
-                _footprintCommentKeywordEnabled = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private ObservableCollection<Footprint> _footprints;
-        private Footprint _selectedFootprint;
-
-        public ObservableCollection<Footprint> Footprints
-        {
-            get => _footprints;
-            set
-            {
-                _footprints = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        public Footprint SelectedFootprint
-        {
-            get => _selectedFootprint;
-            set
-            {
-                _selectedFootprint = value;
-                RaisePropertyChanged();
-            }
-        }
+        [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(DeleteCommand))]
+        private Footprint selectedFootprint;
 
         protected override bool ShouldPromptClose()
         {

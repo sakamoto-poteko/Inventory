@@ -13,12 +13,12 @@
         FocusManager.FocusedElement="{Binding ElementName=TbNameKeyword}">
     <Window.Resources>
         <ContextMenu x:Key="DgContextMenu" DataContext="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource Self}}">
-            <MenuItem Header="_Delete" Command="{Binding CommandDelete}" />
+            <MenuItem Header="_Delete" Command="{Binding DeleteCommand}" />
         </ContextMenu>
         <system:String x:Key="StringNullPrompt">&lt;null&gt;</system:String>
     </Window.Resources>
     <Window.InputBindings>
-        <KeyBinding Key="Esc" Command="{Binding CommandClose}" />
+        <KeyBinding Key="Esc" Command="{Binding CloseCommand}" />
     </Window.InputBindings>
     <Grid>
         <Grid.RowDefinitions>
@@ -29,7 +29,7 @@
 
         <DockPanel>
             <GroupBox Header="Inventories" DockPanel.Dock="Right">
-                <Button Margin="5" Content="View" Command="{Binding CommandViewInventories}" />
+                <Button Margin="5" Content="View" Command="{Binding ViewInventoriesCommand}" />
             </GroupBox>
             <GroupBox Header="Search" DockPanel.Dock="Left">
                 <Grid>
@@ -66,7 +66,7 @@
                     <TextBox Grid.Column="3" IsEnabled="{Binding LocationUnitKeywordEnabled}" Text="{Binding LocationUnitKeyword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     <CheckBox Grid.Column="4" Content="_Comments" IsChecked="{Binding CommentsKeywordEnabled}" />
                     <TextBox Grid.Column="5" IsEnabled="{Binding CommentsKeywordEnabled}" Text="{Binding CommentsKeyword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                    <Button Grid.Column="6" Content="_Search" Command="{Binding CommandSearch}" IsDefault="True"/>
+                    <Button Grid.Column="6" Content="_Search" Command="{Binding SearchKeywordCommand}" IsDefault="True"/>
                 </Grid>
             </GroupBox>
         </DockPanel>
