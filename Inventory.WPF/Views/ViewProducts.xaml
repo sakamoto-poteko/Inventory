@@ -13,12 +13,12 @@
         FocusManager.FocusedElement="{Binding ElementName=TbNameKeyword}">
     <Window.Resources>
         <ContextMenu x:Key="DgContextMenu" DataContext="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource Self}}">
-            <MenuItem Header="_Delete" Command="{Binding CommandDelete}" />
+            <MenuItem Header="_Delete" Command="{Binding DeleteCommand}" />
         </ContextMenu>
         <system:String x:Key="StringNullPrompt">&lt;null&gt;</system:String>
     </Window.Resources>
     <Window.InputBindings>
-        <KeyBinding Key="Esc" Command="{Binding CommandClose}" />
+        <KeyBinding Key="Esc" Command="{Binding CloseCommand}" />
     </Window.InputBindings>
     <Grid>
         <Grid.RowDefinitions>
@@ -69,7 +69,7 @@
                          Text="{Binding ProductFootprintKeyword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 <CheckBox Grid.Column="6" Content="_Comments" IsChecked="{Binding ProductCommentsKeywordEnabled}" />
                 <TextBox Grid.Column="7" IsEnabled="{Binding ProductCommentsKeywordEnabled}" Text="{Binding ProductCommentsKeyword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                <Button Grid.Column="8" Content="_Search" Command="{Binding CommandSearch}" IsDefault="True"/>
+                <Button Grid.Column="8" Content="_Search" Command="{Binding SearchKeywordCommand}" IsDefault="True"/>
             </Grid>
         </GroupBox>
 

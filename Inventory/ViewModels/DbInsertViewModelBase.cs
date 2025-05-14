@@ -1,13 +1,13 @@
 ﻿using Inventory.Framework;
 using Microsoft.EntityFrameworkCore;
-using System.Windows.Input;
-using System.Windows;
 using CommunityToolkit.Mvvm.Messaging;
+using CommunityToolkit.Mvvm.Input;
 
 namespace Inventory.ViewModels
 {
-    public abstract class DbInsertViewModelBase : DbViewModelBase
+    public abstract partial class DbInsertViewModelBase : DbViewModelBase
     {
+        [RelayCommand(CanExecute = nameof(CanInsert))]
         protected virtual void InsertNext()
         {
             if (Insert())
@@ -45,6 +45,7 @@ namespace Inventory.ViewModels
             return true;
         }
 
+        [RelayCommand(CanExecute = nameof(CanInsert))]
         protected virtual void InsertClose()
         {
             if (Insert())
@@ -53,8 +54,5 @@ namespace Inventory.ViewModels
                 ClearFields();
             }
         }
-
-        public RelayCommand CommandInsertNext => new RelayCommand(InsertNext, CanInsert);
-        public RelayCommand CommandInsertClose => new RelayCommand(InsertClose, CanInsert);
     }
 }

@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Data.SqlClient;
 using Inventory.Framework;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Data.SqlClient;
-using System.Windows.Input;
-using System.Windows;
 using CommunityToolkit.Mvvm.Messaging;
+using CommunityToolkit.Mvvm.Input;
 
 namespace Inventory.ViewModels
 {
@@ -85,6 +83,6 @@ namespace Inventory.ViewModels
             }
         }
 
-        public RelayCommand CommandClose => new RelayCommand(Close);
+        public RelayCommand CloseCommand => new(Close);
     }
 }

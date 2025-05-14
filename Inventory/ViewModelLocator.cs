@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Windows;
-using Inventory.Models;
+
 using Inventory.ViewModels;
+
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Inventory

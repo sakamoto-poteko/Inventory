@@ -6,39 +6,58 @@ using System.Linq;
 using Inventory.Framework;
 using Inventory.Models;
 using Microsoft.EntityFrameworkCore;
-#if !WINDOWS_UWP
+using CommunityToolkit.Mvvm.Input;
 using System.Windows.Input;
-using System.Windows;
-#endif
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace Inventory.ViewModels
 {
-    public class PurchaseTransactionViewModel : TransactionBaseViewModel
+    public partial class PurchaseTransactionViewModel : TransactionBaseViewModel
     {
         public static Guid MessageToken = Guid.NewGuid();
 
-        private bool _createNewInventory;
+        [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(ExecuteCloseCommand))]
+        [NotifyCanExecuteChangedFor(nameof(ExecuteNextCommand))]
+        private bool createNewInventory;
+
+        [ObservableProperty]
+        private ObservableCollection<Location> locationList;
+
+        [ObservableProperty]
+        private string locationNameKeyword;
+
+        [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(ExecuteCloseCommand))]
+        [NotifyCanExecuteChangedFor(nameof(ExecuteNextCommand))]
+        private string newUniqueId;
+
+        [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(ExecuteCloseCommand))]
+        [NotifyCanExecuteChangedFor(nameof(ExecuteNextCommand))] 
+        private string price = "0";
+
+        [ObservableProperty]
+        private ObservableCollection<Product> productList;
+
+        [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(ExecuteCloseCommand))]
+        [NotifyCanExecuteChangedFor(nameof(ExecuteNextCommand))]
+        private string productNameKeyword;
+
+        [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(ExecuteCloseCommand))]
+        [NotifyCanExecuteChangedFor(nameof(ExecuteNextCommand))]
+        private Location selectedLocation;
 
 
-        private ObservableCollection<Location> _locationList;
+        [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(ExecuteCloseCommand))]
+        [NotifyCanExecuteChangedFor(nameof(ExecuteNextCommand))]
+        private Supplier selectedSupplier;
 
-        private string _locationNameKeyword;
-
-        private string _newUniqueId;
-
-        private string _price = "0";
-
-        private ObservableCollection<Product> _productList;
-
-        private string _productNameKeyword;
-
-        private Location _selectedLocation;
-
-        private Product _selectedProduct;
-
-        private Supplier _selectedSupplier;
-
-        private ObservableCollection<Supplier> _suppliersList;
+        [ObservableProperty]
+        private ObservableCollection<Supplier> suppliersList;
 
         public PurchaseTransactionViewModel()
         {
@@ -52,132 +71,25 @@ namespace Inventory.ViewModels
         {
             get
             {
-                if (!double.TryParse(_price, out var val))
+                if (!double.TryParse(Price, out var val))
                     return null;
                 return (uint)(val * 1000.0);
             }
         }
 
-        public string Price
-        {
-            get => _price;
-            set
-            {
-                _price = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        public bool CreateNewInventory
-        {
-            get => _createNewInventory;
-            set
-            {
-                _createNewInventory = value;
-                RaisePropertyChanged();
-                CommandManager.InvalidateRequerySuggested();
-            }
-        }
-
-        public ObservableCollection<Product> ProductList
-        {
-            get => _productList;
-            set
-            {
-                _productList = value;
-                RaisePropertyChanged();
-            }
-        }
-
+        private Product _selectedProduct;
         public Product SelectedProduct
         {
             get => _selectedProduct;
             set
             {
-                _selectedProduct = value;
-                RaisePropertyChanged();
+                SetProperty(ref _selectedProduct, value);
                 if (value != null)
                     SetUniqueId();
-                CommandManager.InvalidateRequerySuggested();
+                ExecuteCloseCommand.NotifyCanExecuteChanged();
+                ExecuteNextCommand.NotifyCanExecuteChanged();
             }
         }
-
-        public ObservableCollection<Location> LocationList
-        {
-            get => _locationList;
-            set
-            {
-                _locationList = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        public Location SelectedLocation
-        {
-            get => _selectedLocation;
-            set
-            {
-                _selectedLocation = value;
-                RaisePropertyChanged();
-                CommandManager.InvalidateRequerySuggested();
-            }
-        }
-
-        public string ProductNameKeyword
-        {
-            get => _productNameKeyword;
-            set
-            {
-                _productNameKeyword = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        public string LocationNameKeyword
-        {
-            get => _locationNameKeyword;
-            set
-            {
-                _locationNameKeyword = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        public string NewUniqueId
-        {
-            get => _newUniqueId;
-            set
-            {
-                _newUniqueId = value;
-                RaisePropertyChanged();
-                CommandManager.InvalidateRequerySuggested();
-            }
-        }
-
-        public ObservableCollection<Supplier> SuppliersList
-        {
-            get => _suppliersList;
-            set
-            {
-                _suppliersList = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        public Supplier SelectedSupplier
-        {
-            get => _selectedSupplier;
-            set
-            {
-                _selectedSupplier = value;
-                RaisePropertyChanged();
-                CommandManager.InvalidateRequerySuggested();
-            }
-        }
-
-        public RelayCommand CommandSearchProduct => new RelayCommand(SearchProductNameKeyword);
-        public RelayCommand CommandSearchLocation => new RelayCommand(SearchLocationNameKeyword);
-        public RelayCommand CommandSearchSupplier => new RelayCommand(SearchSupplierKeyword);
 
         private void SetUniqueId()
         {
@@ -187,6 +99,7 @@ namespace Inventory.ViewModels
                 : $"{SelectedProduct.ProductName.ToUpper()}@{SelectedProduct.Footprint.FootprintName}";
         }
 
+        [RelayCommand]
         private void SearchProductNameKeyword()
         {
             IQueryable<Product> products = _context.Products.Include(p => p.Footprint);
@@ -196,6 +109,7 @@ namespace Inventory.ViewModels
             ProductList = new ObservableCollection<Product>(products);
         }
 
+        [RelayCommand]
         private void SearchLocationNameKeyword()
         {
             if (!string.IsNullOrWhiteSpace(LocationNameKeyword))
@@ -206,6 +120,7 @@ namespace Inventory.ViewModels
         }
 
 
+        [RelayCommand]
         protected void SearchSupplierKeyword()
         {
             IQueryable<Supplier> list = _context.Suppliers;
@@ -237,63 +152,61 @@ namespace Inventory.ViewModels
 
         protected override bool Execute()
         {
-            using (var transaction = _context.Database.BeginTransaction())
+            using var transaction = _context.Database.BeginTransaction();
+            try
             {
-                try
+                Models.Inventory inventory;
+                if (CreateNewInventory)
                 {
-                    Models.Inventory inventory;
-                    if (CreateNewInventory)
-                    {
-                        inventory = new Models.Inventory
-                        {
-                            Comments = NullOrWhitespaceAsNull(Comments),
-                            Location = SelectedLocation,
-                            Product = SelectedProduct,
-                            Quantity = 0,
-                            UniqueId = NewUniqueId
-                        };
-                        _context.Inventories.Add(inventory);
-                        _context.SaveChanges();
-                    }
-                    else
-                    {
-                        inventory = SelectedInventory;
-                    }
-
-                    Debug.Assert(IntQuantity != null, nameof(IntQuantity) + " != null");
-                    var entity = new Transaction
+                    inventory = new Models.Inventory
                     {
                         Comments = NullOrWhitespaceAsNull(Comments),
-                        Direction = Transaction.InventoryDirection.Addition,
-                        Inventory = inventory,
-                        Price = (int?)UintPrice,
-                        Quantity = IntQuantity.Value,
-                        Supplier = SelectedSupplier,
-                        Time = TransactionTime
+                        Location = SelectedLocation,
+                        Product = SelectedProduct,
+                        Quantity = 0,
+                        UniqueId = NewUniqueId
                     };
-                    inventory.Quantity += IntQuantity.Value;
-
-                    _context.Transactions.Add(entity);
-                    _context.Entry(inventory).State = EntityState.Modified;
+                    _context.Inventories.Add(inventory);
                     _context.SaveChanges();
-                    transaction.Commit();
-                    return true;
                 }
-                catch (DbUpdateException ex)
+                else
                 {
-                    string err;
-                    if (IsConstraintsViolation(ex))
-                        err = "record already existed";
-                    else
-                        err = ex.InnerException?.Message ?? ex.Message;
-                    UniversalMessageBox.Show($"Unable to save: {err}",
-                        "Save failed",
-                        UniversalMessageBox.MessageBoxButton.OK,
-                        UniversalMessageBox.MessageBoxImage.Error);
-                    transaction.Rollback();
-                    UndoingChangesDbContextLevel(_context);
-                    return false;
+                    inventory = SelectedInventory;
                 }
+
+                Debug.Assert(IntQuantity != null, nameof(IntQuantity) + " != null");
+                var entity = new Transaction
+                {
+                    Comments = NullOrWhitespaceAsNull(Comments),
+                    Direction = Transaction.InventoryDirection.Addition,
+                    Inventory = inventory,
+                    Price = (int?)UintPrice,
+                    Quantity = IntQuantity.Value,
+                    Supplier = SelectedSupplier,
+                    Time = TransactionTime
+                };
+                inventory.Quantity += IntQuantity.Value;
+
+                _context.Transactions.Add(entity);
+                _context.Entry(inventory).State = EntityState.Modified;
+                _context.SaveChanges();
+                transaction.Commit();
+                return true;
+            }
+            catch (DbUpdateException ex)
+            {
+                string err;
+                if (IsConstraintsViolation(ex))
+                    err = "record already existed";
+                else
+                    err = ex.InnerException?.Message ?? ex.Message;
+                UniversalMessageBox.Show($"Unable to save: {err}",
+                    "Save failed",
+                    UniversalMessageBox.MessageBoxButton.OK,
+                    UniversalMessageBox.MessageBoxImage.Error);
+                transaction.Rollback();
+                UndoingChangesDbContextLevel(_context);
+                return false;
             }
         }
 
@@ -323,6 +236,7 @@ namespace Inventory.ViewModels
             SelectedLocation = null;
             SelectedProduct = null;
             NewUniqueId = null;
+            CommandManager.InvalidateRequerySuggested();
         }
 
         protected override bool ShouldPromptClose()

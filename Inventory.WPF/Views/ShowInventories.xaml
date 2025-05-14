@@ -11,7 +11,7 @@
         x:Name="WinShowInventories"
         WindowStartupLocation="CenterScreen">
     <Window.InputBindings>
-        <KeyBinding Key="Esc" Command="{Binding Path=CommandClose, ElementName=WinShowInventories}" />
+        <KeyBinding Key="Esc" Command="{Binding Path=CloseCommand, ElementName=WinShowInventories}" />
     </Window.InputBindings>
     <Grid>
         <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding DataContext, ElementName=WinShowInventories}" CanUserAddRows="False">

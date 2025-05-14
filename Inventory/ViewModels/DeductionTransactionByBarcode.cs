@@ -1,33 +1,22 @@
-﻿using Inventory.Framework;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Windows.Input;
-using System.Windows;
 using CommunityToolkit.Mvvm.Messaging;
+using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.ComponentModel;
+using System.Windows.Input;
 
 namespace Inventory.ViewModels
 {
-    public class DeductionTransactionByBarcode : DeductionTransaction
+    public partial class DeductionTransactionByBarcode : DeductionTransaction
     {
         public new static Guid MessageToken = Guid.NewGuid();
         public override Guid MsgToken => MessageToken;
 
-        private string _locationKeyword;
+        [ObservableProperty]
+        private string locationKeyword;
 
-        public string LocationKeyword
-        {
-            get => _locationKeyword;
-            set
-            {
-                _locationKeyword = value;
-                RaisePropertyChanged();
-                CommandManager.InvalidateRequerySuggested();
-            }
-        }
-
+        [RelayCommand(CanExecute = nameof(CanSearchByLocation))]
         private void SearchInventoryByLocation()
         {
             if (!string.IsNullOrWhiteSpace(LocationKeyword))
@@ -61,17 +50,21 @@ namespace Inventory.ViewModels
             }
         }
 
+        private bool CanInsertShadow() => CanInsert();
+
+        [RelayCommand(CanExecute = nameof(CanInsertShadow))]
         private void InsertAndNew()
         {
-            ExecuteNext();
+            ExecuteNextDefault();
             LocationKeyword = null;
             Quantity = "0";
             WeakReferenceMessenger.Default.Send(new ChangeFocusMessage { FocusTarget = ChangeFocusMessage.Target.Search, MessageToken = MsgToken });
         }
 
-        public RelayCommand CommandSearchByLocation => new RelayCommand(SearchInventoryByLocation,
-            () => !string.IsNullOrWhiteSpace(LocationKeyword));
+        public override IRelayCommand ExecuteNextCommand => InsertAndNewCommand; 
 
-        public new RelayCommand CommandInsertNext => new RelayCommand(InsertAndNew, CanInsert);
+
+        private bool CanSearchByLocation() => !string.IsNullOrWhiteSpace(LocationKeyword);
+
     }
 }

@@ -9,7 +9,8 @@
     <Application.Resources>
         <ResourceDictionary>
             <local:ViewModelLocator x:Key="ViewModelLocator" />
-            
+
+            <extensions:UppercaseConverter x:Key="UppercaseConverter" />
             <extensions:InvertedBoolConverter x:Key="InvertedBoolConverter" />
             <extensions:ValueConverterGroup x:Key="InvertedBooleanToVisibilityConverter">
                 <extensions:InvertedBoolConverter />

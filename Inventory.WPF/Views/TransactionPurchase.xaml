@@ -46,7 +46,7 @@
             <TextBox Grid.Row="0" Grid.Column="1" x:Name="TbSupplierKeyword" Text="{Binding SupplierKeyword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             <Button Grid.Row="0" Grid.Column="2" IsDefault="{Binding IsFocused, ElementName=TbSupplierKeyword}" 
                     FontFamily="Segoe MDL2 Assets" Content="&#xE11A;" Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}"
-                    Command="{Binding CommandSearchSupplier}" />
+                    Command="{Binding SearchSupplierKeywordCommand}" />
 
             <ListView Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,5,0,0" ItemsSource="{Binding SuppliersList}" SelectedValue="{Binding SelectedSupplier}">
                 <ListView.ItemTemplate>
@@ -85,7 +85,7 @@
                         <TextBox Grid.Row="0" Grid.Column="1" x:Name="TbProductKeyword" Text="{Binding ProductNameKeyword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         <Button Margin="5,5,0,0" Grid.Row="0" Grid.Column="2" IsDefault="{Binding IsFocused, ElementName=TbProductKeyword}" 
                             FontFamily="Segoe MDL2 Assets" Content="&#xE11A;" Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}"
-                            Command="{Binding CommandSearchProduct}"/>
+                            Command="{Binding SearchProductNameKeywordCommand}"/>
 
                         <ListView Grid.Row="1" Grid.ColumnSpan="3" Grid.Column="0" 
                               ItemsSource="{Binding ProductList}" SelectedValue="{Binding SelectedProduct}">
@@ -107,7 +107,7 @@
                         <TextBox Grid.Row="2" Grid.Column="1" x:Name="TbLocationKeyword" Text="{Binding LocationNameKeyword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         <Button Margin="5,5,0,0" Grid.Row="2" Grid.Column="2" IsDefault="{Binding IsFocused, ElementName=TbLocationKeyword}" 
                                 FontFamily="Segoe MDL2 Assets" Content="&#xE11A;" Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}"
-                                Command="{Binding CommandSearchLocation}"/>
+                                Command="{Binding SearchLocationNameKeywordCommand}"/>
 
                         <ListView Grid.Row="3" Grid.ColumnSpan="3" Grid.Column="0" 
                               ItemsSource="{Binding LocationList}" SelectedValue="{Binding SelectedLocation}">
@@ -129,7 +129,7 @@
             </TabItem>
         </TabControl>
 
-        <GroupBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" x:Name="GbPurchaseInfo" Header="Purchase info">
+        <GroupBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" x:Name="GbInventoryChangeInfo" Header="Purchase info">
             <Grid Margin="0,5,0,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto" />

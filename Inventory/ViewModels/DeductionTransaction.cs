@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Diagnostics;
+
 using Inventory.Framework;
 using Inventory.Models;
+
 using Microsoft.EntityFrameworkCore;
-#if !WINDOWS_UWP
-using System.Windows.Input;
-using System.Windows;
-#endif
 
 namespace Inventory.ViewModels
 {
@@ -28,8 +26,8 @@ namespace Inventory.ViewModels
             set
             {
                 TransactionType = value ? EnumTransactionType.Shrinkage : EnumTransactionType.Retrieve;
-                RaisePropertyChanged();
-                RaisePropertyChanged(nameof(Title));
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(Title));
             }
         }
 
@@ -43,54 +41,44 @@ namespace Inventory.ViewModels
             if (SelectedInventory.Quantity < IntQuantity)
                 throw new InvalidOperationException("Not enough inventory");
             Debug.Assert(SelectedInventory != null, nameof(SelectedInventory) + " != null");
-
-            Transaction.InventoryDirection dir;
-            switch (TransactionType)
+            var dir = TransactionType switch
             {
-                case EnumTransactionType.Retrieve:
-                    dir = Transaction.InventoryDirection.Removal;
-                    break;
-                case EnumTransactionType.Shrinkage:
-                    dir = Transaction.InventoryDirection.Shrinkage;
-                    break;
-                default:
-                    throw new InvalidOperationException(
-                        $"TransactionType {TransactionType} is not suitable for this view model");
+                EnumTransactionType.Retrieve => Transaction.InventoryDirection.Removal,
+                EnumTransactionType.Shrinkage => Transaction.InventoryDirection.Shrinkage,
+                _ => throw new InvalidOperationException(
+                                        $"TransactionType {TransactionType} is not suitable for this view model"),
+            };
+            using var transaction = _context.Database.BeginTransaction();
+            var entity = new Transaction
+            {
+                Comments = NullOrWhitespaceAsNull(Comments),
+                Direction = dir,
+                Inventory = SelectedInventory,
+                Price = null,
+                Quantity = IntQuantity.Value,
+                Supplier = null,
+                Time = TransactionTime
+            };
+            _context.Add(entity);
+
+            SelectedInventory.Quantity -= IntQuantity.Value;
+            _context.Entry(SelectedInventory).State = EntityState.Modified;
+
+            try
+            {
+                _context.SaveChanges();
+                transaction.Commit();
+                return true;
             }
-
-            using (var transaction = _context.Database.BeginTransaction())
+            catch (DbUpdateException e)
             {
-                var entity = new Transaction
-                {
-                    Comments = NullOrWhitespaceAsNull(Comments),
-                    Direction = dir,
-                    Inventory = SelectedInventory,
-                    Price = null,
-                    Quantity = IntQuantity.Value,
-                    Supplier = null,
-                    Time = TransactionTime
-                };
-                _context.Add(entity);
-
-                SelectedInventory.Quantity -= IntQuantity.Value;
-                _context.Entry(SelectedInventory).State = EntityState.Modified;
-
-                try
-                {
-                    _context.SaveChanges();
-                    transaction.Commit();
-                    return true;
-                }
-                catch (DbUpdateException e)
-                {
-                    UniversalMessageBox.Show($"An error has occured: {e.Message}\n{e.InnerException?.Message}",
-                        "Save failed",
-                        UniversalMessageBox.MessageBoxButton.OK,
-                        UniversalMessageBox.MessageBoxImage.Error);
-                    transaction.Rollback();
-                    UndoingChangesDbContextLevel(_context);
-                    return false;
-                }
+                UniversalMessageBox.Show($"An error has occured: {e.Message}\n{e.InnerException?.Message}",
+                    "Save failed",
+                    UniversalMessageBox.MessageBoxButton.OK,
+                    UniversalMessageBox.MessageBoxImage.Error);
+                transaction.Rollback();
+                UndoingChangesDbContextLevel(_context);
+                return false;
             }
         }
 

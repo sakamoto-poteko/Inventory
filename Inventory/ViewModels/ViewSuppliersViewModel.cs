@@ -5,85 +5,36 @@ using System.Linq;
 using Inventory.Framework;
 using Inventory.Models;
 using Microsoft.EntityFrameworkCore;
+using CommunityToolkit.Mvvm.ComponentModel;
+
 #if !WINDOWS_UWP
-using System.Windows.Input;
-using System.Windows;
 #endif
 
 namespace Inventory.ViewModels
 {
-    public class ViewSuppliersViewModel : DbQueryViewModelBase
+    public partial class ViewSuppliersViewModel : DbQueryViewModelBase
     {
         public static Guid MessageToken = Guid.NewGuid();
 
-        private string _commentsKeyword;
-        private bool _commentsKeywordEnabled;
-        private string _nameKeyword;
-        private bool _nameKeywordEnabled = true;
+        [ObservableProperty]
+        private string commentsKeyword;
 
-        private Supplier _selectedItem;
-        private ObservableCollection<Supplier> _suppliers;
+        [ObservableProperty]
+        private bool commentsKeywordEnabled;
 
-        public string NameKeyword
-        {
-            get => _nameKeyword;
-            set
-            {
-                _nameKeyword = value;
-                RaisePropertyChanged();
-            }
-        }
+        [ObservableProperty]
+        private string nameKeyword;
 
-        public bool NameKeywordEnabled
-        {
-            get => _nameKeywordEnabled;
-            set
-            {
-                _nameKeywordEnabled = value;
-                RaisePropertyChanged();
-            }
-        }
+        [ObservableProperty]
+        private bool nameKeywordEnabled = true;
 
-        public string CommentsKeyword
-        {
-            get => _commentsKeyword;
-            set
-            {
-                _commentsKeyword = value;
-                RaisePropertyChanged();
-            }
-        }
+        [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(DeleteCommand))]
+        private Supplier selectedItem;
 
-        public bool CommentsKeywordEnabled
-        {
-            get => _commentsKeywordEnabled;
-            set
-            {
-                _commentsKeywordEnabled = value;
-                RaisePropertyChanged();
-            }
-        }
+        [ObservableProperty]
+        private ObservableCollection<Supplier> suppliers;
 
-        public ObservableCollection<Supplier> Suppliers
-        {
-            get => _suppliers;
-            set
-            {
-                _suppliers = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        public Supplier SelectedItem
-        {
-            get => _selectedItem;
-            set
-            {
-                _selectedItem = value;
-                RaisePropertyChanged();
-                CommandManager.InvalidateRequerySuggested();
-            }
-        }
 
         public override Guid MsgToken => MessageToken;
 
