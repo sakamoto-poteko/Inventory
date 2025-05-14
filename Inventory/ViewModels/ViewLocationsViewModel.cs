@@ -5,6 +5,8 @@ using System.Linq;
 using Inventory.Framework;
 using Inventory.Models;
 using Microsoft.EntityFrameworkCore;
+using CommunityToolkit.Mvvm.Messaging;
+
 #if !WINDOWS_UWP
 using System.Windows.Input;
 using System.Windows;
@@ -122,11 +124,12 @@ namespace Inventory.ViewModels
                 .Include(i => i.Product)
                 .ThenInclude(p => p.Footprint)
                 .Where(i => i.LocationId == SelectedLocation.LocationId).ToList();
-            MessengerInstance.Send(new ShowViewMessage
+            WeakReferenceMessenger.Default.Send(new ShowViewMessage
             {
                 ViewModel = inventories,
-                ViewToShow = ShowViewMessage.View.InventoryList
-            }, MsgToken);
+                ViewToShow = ShowViewMessage.View.InventoryList,
+                MessageToken = MsgToken,
+            });
         }
 
         private bool CanViewInventories()

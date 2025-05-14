@@ -1,8 +1,9 @@
 ﻿using System.Windows;
 using System.Windows.Input;
-using GalaSoft.MvvmLight.Messaging;
+using CommunityToolkit.Mvvm.Messaging;
 using Inventory.Models;
 using Inventory.ViewModels;
+using Inventory.WPF.Utils;
 using Microsoft.EntityFrameworkCore;
 
 namespace Inventory.Views
@@ -12,15 +13,13 @@ namespace Inventory.Views
     /// </summary>
     public partial class AddSupplier : Window
     {
+        private readonly CloseWindowMessageHandler _closeWindowMessageHandler;
+
         public AddSupplier()
         {
             InitializeComponent();
-            Messenger.Default.Register<WindowMessages>(this, AddSupplierViewModel.MessageToken,
-                msg =>
-                {
-                    if (msg == WindowMessages.CloseWindow)
-                        Close();
-                });
+            _closeWindowMessageHandler = new CloseWindowMessageHandler(this, AddSupplierViewModel.MessageToken);
         }
+
     }
 }

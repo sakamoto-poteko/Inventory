@@ -6,44 +6,46 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using GalaSoft.MvvmLight.Messaging;
+using CommunityToolkit.Mvvm.Messaging;
 using Inventory.ViewModels;
+using Inventory.WPF.Utils;
 
 namespace Inventory.WPF.Views
 {
     /// <summary>
     /// Interaction logic for TransactionDeductionByBarcode.xaml
     /// </summary>
-    public partial class TransactionDeductionByBarcode : Window
+    public partial class TransactionDeductionByBarcode : Window, IRecipient<ChangeFocusMessage>
     {
+        private readonly CloseWindowMessageHandler _closeWindowMessageHandler;
+
         public TransactionDeductionByBarcode()
         {
             InitializeComponent();
-            Messenger.Default.Register<WindowMessages>(this, DeductionTransactionByBarcode.MessageToken,
-                msg =>
-                {
-                    if (msg == WindowMessages.CloseWindow)
-                        Close();
-                });
+            _closeWindowMessageHandler = new CloseWindowMessageHandler(this, DeductionTransactionByBarcode.MessageToken);
+            WeakReferenceMessenger.Default.Register<ChangeFocusMessage>(this);
+        }
 
-            Messenger.Default.Register<ChangeFocusMessage>(this, DeductionTransactionByBarcode.MessageToken,
-                msg =>
+        public void Receive(ChangeFocusMessage message)
+        {
+            if (message.MessageToken == DeductionTransactionByBarcode.MessageToken)
+            {
+                switch (message.FocusTarget)
                 {
-                    switch (msg)
-                    {
-                        case ChangeFocusMessage.FocusToSearch:
-                            TbLocationKeyword.Focus();
-                            break;
-                        case ChangeFocusMessage.FocusToQuantity:
-                            TbQuantity.Focus();
-                            break;
-                        default:
-                            break;
-                    }
-                });
+                    case ChangeFocusMessage.Target.Search:
+                        TbLocationKeyword.Focus();
+                        break;
+                    case ChangeFocusMessage.Target.Quantity:
+                        TbQuantity.Focus();
+                        break;
+                    default:
+                        break;
+                }
+            }
         }
 
         private void TbQuantity_PreviewTextInput(object sender, TextCompositionEventArgs e)

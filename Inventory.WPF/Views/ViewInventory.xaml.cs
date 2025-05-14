@@ -9,9 +9,10 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using GalaSoft.MvvmLight.Messaging;
+using CommunityToolkit.Mvvm.Messaging;
 using Inventory.Framework;
 using Inventory.ViewModels;
+using Inventory.WPF.Utils;
 
 namespace Inventory.Views
 {
@@ -20,15 +21,13 @@ namespace Inventory.Views
     /// </summary>
     public partial class ViewInventory : Window
     {
+        private readonly CloseWindowMessageHandler _closeWindowMessageHandler;
+
         public ViewInventory()
         {
             InitializeComponent();
-            Messenger.Default.Register<WindowMessages>(this, DeductionTransaction.MessageToken,
-                msg =>
-                {
-                    if (msg == WindowMessages.CloseWindow)
-                        Close();
-                });
+            _closeWindowMessageHandler = new CloseWindowMessageHandler(this, DeductionTransaction.MessageToken);
         }
+
     }
 }

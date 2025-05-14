@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29001.49
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35806.99 d17.13
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Inventory.WPF", "Inventory.WPF\Inventory.WPF.csproj", "{5286074C-1A47-4BB6-8DA8-BA7713915BA9}"
 EndProject
@@ -15,14 +15,7 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Inventory", "Inventory\Inve
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Assets", "Assets\Assets.vcxitems", "{3B118FE6-B321-4DC0-BD36-31E1B338A338}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inventory.UWP", "Inventory.UWP\Inventory.UWP.csproj", "{73390F37-D189-43D6-B572-790CB8F4E4DB}"
-EndProject
 Global
-	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		Assets\Assets.vcxitems*{3b118fe6-b321-4dc0-bd36-31e1b338a338}*SharedItemsImports = 9
-		Inventory\Inventory.projitems*{73390f37-d189-43d6-b572-790cb8f4e4db}*SharedItemsImports = 4
-		Inventory\Inventory.projitems*{c45d8028-1523-4ba8-a433-a345e67a52de}*SharedItemsImports = 13
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|ARM = Debug|ARM
@@ -71,50 +64,16 @@ Global
 		{5286074C-1A47-4BB6-8DA8-BA7713915BA9}.Release|x64.Build.0 = Release|Any CPU
 		{5286074C-1A47-4BB6-8DA8-BA7713915BA9}.Release|x86.ActiveCfg = Release|Any CPU
 		{5286074C-1A47-4BB6-8DA8-BA7713915BA9}.Release|x86.Build.0 = Release|Any CPU
-		{73390F37-D189-43D6-B572-790CB8F4E4DB}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{73390F37-D189-43D6-B572-790CB8F4E4DB}.Debug|ARM.ActiveCfg = Debug|ARM
-		{73390F37-D189-43D6-B572-790CB8F4E4DB}.Debug|ARM.Build.0 = Debug|ARM
-		{73390F37-D189-43D6-B572-790CB8F4E4DB}.Debug|ARM.Deploy.0 = Debug|ARM
-		{73390F37-D189-43D6-B572-790CB8F4E4DB}.Debug|ARM64.ActiveCfg = Debug|ARM64
-		{73390F37-D189-43D6-B572-790CB8F4E4DB}.Debug|ARM64.Build.0 = Debug|ARM64
-		{73390F37-D189-43D6-B572-790CB8F4E4DB}.Debug|ARM64.Deploy.0 = Debug|ARM64
-		{73390F37-D189-43D6-B572-790CB8F4E4DB}.Debug|x64.ActiveCfg = Debug|x64
-		{73390F37-D189-43D6-B572-790CB8F4E4DB}.Debug|x64.Build.0 = Debug|x64
-		{73390F37-D189-43D6-B572-790CB8F4E4DB}.Debug|x64.Deploy.0 = Debug|x64
-		{73390F37-D189-43D6-B572-790CB8F4E4DB}.Debug|x86.ActiveCfg = Debug|x86
-		{73390F37-D189-43D6-B572-790CB8F4E4DB}.Debug|x86.Build.0 = Debug|x86
-		{73390F37-D189-43D6-B572-790CB8F4E4DB}.Debug|x86.Deploy.0 = Debug|x86
-		{73390F37-D189-43D6-B572-790CB8F4E4DB}.NoUWP|Any CPU.ActiveCfg = NoUWP|x86
-		{73390F37-D189-43D6-B572-790CB8F4E4DB}.NoUWP|ARM.ActiveCfg = NoUWP|ARM
-		{73390F37-D189-43D6-B572-790CB8F4E4DB}.NoUWP|ARM.Build.0 = NoUWP|ARM
-		{73390F37-D189-43D6-B572-790CB8F4E4DB}.NoUWP|ARM.Deploy.0 = NoUWP|ARM
-		{73390F37-D189-43D6-B572-790CB8F4E4DB}.NoUWP|ARM64.ActiveCfg = NoUWP|ARM64
-		{73390F37-D189-43D6-B572-790CB8F4E4DB}.NoUWP|ARM64.Build.0 = NoUWP|ARM64
-		{73390F37-D189-43D6-B572-790CB8F4E4DB}.NoUWP|ARM64.Deploy.0 = NoUWP|ARM64
-		{73390F37-D189-43D6-B572-790CB8F4E4DB}.NoUWP|x64.ActiveCfg = NoUWP|x64
-		{73390F37-D189-43D6-B572-790CB8F4E4DB}.NoUWP|x64.Build.0 = NoUWP|x64
-		{73390F37-D189-43D6-B572-790CB8F4E4DB}.NoUWP|x64.Deploy.0 = NoUWP|x64
-		{73390F37-D189-43D6-B572-790CB8F4E4DB}.NoUWP|x86.ActiveCfg = NoUWP|x86
-		{73390F37-D189-43D6-B572-790CB8F4E4DB}.NoUWP|x86.Build.0 = NoUWP|x86
-		{73390F37-D189-43D6-B572-790CB8F4E4DB}.NoUWP|x86.Deploy.0 = NoUWP|x86
-		{73390F37-D189-43D6-B572-790CB8F4E4DB}.Release|Any CPU.ActiveCfg = Release|x86
-		{73390F37-D189-43D6-B572-790CB8F4E4DB}.Release|ARM.ActiveCfg = Release|ARM
-		{73390F37-D189-43D6-B572-790CB8F4E4DB}.Release|ARM.Build.0 = Release|ARM
-		{73390F37-D189-43D6-B572-790CB8F4E4DB}.Release|ARM.Deploy.0 = Release|ARM
-		{73390F37-D189-43D6-B572-790CB8F4E4DB}.Release|ARM64.ActiveCfg = Release|ARM64
-		{73390F37-D189-43D6-B572-790CB8F4E4DB}.Release|ARM64.Build.0 = Release|ARM64
-		{73390F37-D189-43D6-B572-790CB8F4E4DB}.Release|ARM64.Deploy.0 = Release|ARM64
-		{73390F37-D189-43D6-B572-790CB8F4E4DB}.Release|x64.ActiveCfg = Release|x64
-		{73390F37-D189-43D6-B572-790CB8F4E4DB}.Release|x64.Build.0 = Release|x64
-		{73390F37-D189-43D6-B572-790CB8F4E4DB}.Release|x64.Deploy.0 = Release|x64
-		{73390F37-D189-43D6-B572-790CB8F4E4DB}.Release|x86.ActiveCfg = Release|x86
-		{73390F37-D189-43D6-B572-790CB8F4E4DB}.Release|x86.Build.0 = Release|x86
-		{73390F37-D189-43D6-B572-790CB8F4E4DB}.Release|x86.Deploy.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {93A7BEEB-26B5-46D0-92F0-62C5BDD0582E}
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		Assets\Assets.vcxitems*{3b118fe6-b321-4dc0-bd36-31e1b338a338}*SharedItemsImports = 9
+		Inventory\Inventory.projitems*{5286074c-1a47-4bb6-8da8-ba7713915ba9}*SharedItemsImports = 5
+		Inventory\Inventory.projitems*{c45d8028-1523-4ba8-a433-a345e67a52de}*SharedItemsImports = 13
 	EndGlobalSection
 EndGlobal

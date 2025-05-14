@@ -6,44 +6,45 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
-using GalaSoft.MvvmLight.Messaging;
+using CommunityToolkit.Mvvm.Messaging;
 using Inventory.ViewModels;
+using Inventory.WPF.Utils;
 
 namespace Inventory.Views
 {
     /// <summary>
     /// Interaction logic for ViewLocations.xaml
     /// </summary>
-    public partial class ViewLocations : Window
+    public partial class ViewLocations : Window, IRecipient<ShowViewMessage>
     {
+        private readonly CloseWindowMessageHandler _closeWindowMessageHandler;
+
         public ViewLocations()
         {
-            InitializeComponent();
-            Messenger.Default.Register<WindowMessages>(this, ViewLocationsViewModel.MessageToken,
-                msg =>
+            InitializeComponent(); 
+            _closeWindowMessageHandler = new CloseWindowMessageHandler(this, ViewLocationsViewModel.MessageToken);
+           
+            WeakReferenceMessenger.Default.Register<ShowViewMessage>(this);
+        }
+
+        public void Receive(ShowViewMessage message)
+        {
+            if (message.MessageToken == ViewLocationsViewModel.MessageToken && message.ViewToShow == ShowViewMessage.View.InventoryList)
+            {
+                Dispatcher.Invoke(() =>
                 {
-                    if (msg == WindowMessages.CloseWindow)
-                        Close();
-                });
-            Messenger.Default.Register<ShowViewMessage>(this, ViewLocationsViewModel.MessageToken,
-                msg =>
-                {
-                    if (msg.ViewToShow == ShowViewMessage.View.InventoryList)
+                    var window = new ShowInventories()
                     {
-                        Dispatcher.Invoke(() =>
-                        {
-                            var window = new ShowInventories()
-                            {
-                                DataContext = msg.ViewModel
-                            };
-                            window.ShowDialog();
-                        });
-                    }
+                        DataContext = message.ViewModel
+                    };
+                    window.ShowDialog();
                 });
+            }
         }
     }
 }

@@ -6,11 +6,13 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using GalaSoft.MvvmLight.Messaging;
+using CommunityToolkit.Mvvm.Messaging;
 using Inventory.ViewModels;
+using Inventory.WPF.Utils;
 
 namespace Inventory.Views
 {
@@ -19,15 +21,12 @@ namespace Inventory.Views
     /// </summary>
     public partial class AddFootprint : Window
     {
+        private readonly CloseWindowMessageHandler _closeWindowMessageHandler;
+        
         public AddFootprint()
         {
             InitializeComponent();
-            Messenger.Default.Register<WindowMessages>(this, AddFootprintViewModel.MessageToken,
-                msg =>
-                {
-                    if (msg == WindowMessages.CloseWindow)
-                        Close();
-                });
+            _closeWindowMessageHandler = new CloseWindowMessageHandler(this, AddFootprintViewModel.MessageToken);
         }
     }
 }

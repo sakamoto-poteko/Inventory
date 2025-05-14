@@ -1,16 +1,12 @@
 ﻿using System;
 using System.Data.SqlClient;
-using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Messaging;
 using Inventory.Framework;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
-#if WINDOWS_UWP
-using Windows.UI.Xaml;
-#else
+using Microsoft.Data.SqlClient;
 using System.Windows.Input;
 using System.Windows;
-#endif
+using CommunityToolkit.Mvvm.Messaging;
 
 namespace Inventory.ViewModels
 {
@@ -50,7 +46,12 @@ namespace Inventory.ViewModels
                 if (result == UniversalMessageBox.MessageBoxResult.No)
                     return;
             }
-            Messenger.Default.Send(WindowMessages.CloseWindow, MsgToken);
+
+            WeakReferenceMessenger.Default.Send(new WindowMessage
+            {
+                MessageType = WindowMessage.Type.CloseWindow,
+                MessageToken = MsgToken,
+            });
         }
 
         protected string NullOrWhitespaceAsNull(string val)

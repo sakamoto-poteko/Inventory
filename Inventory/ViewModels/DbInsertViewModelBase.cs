@@ -1,10 +1,8 @@
-﻿using GalaSoft.MvvmLight.Messaging;
-using Inventory.Framework;
+﻿using Inventory.Framework;
 using Microsoft.EntityFrameworkCore;
-#if !WINDOWS_UWP
 using System.Windows.Input;
 using System.Windows;
-#endif
+using CommunityToolkit.Mvvm.Messaging;
 
 namespace Inventory.ViewModels
 {
@@ -51,11 +49,11 @@ namespace Inventory.ViewModels
         {
             if (Insert())
             {
-                Messenger.Default.Send(WindowMessages.CloseWindow, MsgToken);
+                WeakReferenceMessenger.Default.Send(new WindowMessage { MessageToken = MsgToken, MessageType = WindowMessage.Type.CloseWindow });
                 ClearFields();
             }
         }
-        
+
         public RelayCommand CommandInsertNext => new RelayCommand(InsertNext, CanInsert);
         public RelayCommand CommandInsertClose => new RelayCommand(InsertClose, CanInsert);
     }

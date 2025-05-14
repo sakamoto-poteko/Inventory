@@ -4,12 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using GalaSoft.MvvmLight.Messaging;
-
-#if !WINDOWS_UWP
 using System.Windows.Input;
 using System.Windows;
-#endif
+using CommunityToolkit.Mvvm.Messaging;
 
 namespace Inventory.ViewModels
 {
@@ -50,7 +47,7 @@ namespace Inventory.ViewModels
                 InventoriesList = new System.Collections.ObjectModel.ObservableCollection<Models.Inventory>(inv);
                 if (InventoriesList.Count > 0)
                     SelectedInventory = InventoriesList[0];
-                Messenger.Default.Send(ChangeFocusMessage.FocusToQuantity, MsgToken);
+                WeakReferenceMessenger.Default.Send(new ChangeFocusMessage { FocusTarget = ChangeFocusMessage.Target.Quantity, MessageToken = MsgToken });
             }
         }
 
@@ -60,7 +57,7 @@ namespace Inventory.ViewModels
             set
             {
                 base.SelectedInventory = value;
-                Messenger.Default.Send(ChangeFocusMessage.FocusToQuantity, MsgToken);
+                WeakReferenceMessenger.Default.Send(new ChangeFocusMessage { FocusTarget = ChangeFocusMessage.Target.Quantity, MessageToken = MsgToken });
             }
         }
 
@@ -69,7 +66,7 @@ namespace Inventory.ViewModels
             ExecuteNext();
             LocationKeyword = null;
             Quantity = "0";
-            Messenger.Default.Send(ChangeFocusMessage.FocusToSearch, MsgToken);
+            WeakReferenceMessenger.Default.Send(new ChangeFocusMessage { FocusTarget = ChangeFocusMessage.Target.Search, MessageToken = MsgToken });
         }
 
         public RelayCommand CommandSearchByLocation => new RelayCommand(SearchInventoryByLocation,
